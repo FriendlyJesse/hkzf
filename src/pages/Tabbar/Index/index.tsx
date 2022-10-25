@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Swiper, Toast } from 'antd-mobile'
 import styles from './index.module.css'
-import axios from 'axios'
+import { getSwipers } from '../../../apis'
 
 const colors = ['#ace0ff', '#bcffbd', '#e4fabd', '#ffcfac']
 const items = colors.map((color, index) => (
@@ -21,16 +21,17 @@ const items = colors.map((color, index) => (
 function Index () {
   const [swipers, setSwipers] = useState([])
   
-  async function getSwipers() {
-    const result = await axios.get('http://localhost:8080/home/swiper')
-    console.log(result)
+  async function getSwipersData() {
+    const { code, data } = await getSwipers()
+    if (code === 200) {
+      setSwipers(data)
+      console.log(data)
+    }
   }
-
   useEffect(() => {
-    getSwipers()
+    getSwipersData()
   }, [])
 
-  
 
   return (<div>
     <Swiper loop autoplay>

@@ -1,5 +1,5 @@
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { TabBar, Badge } from 'antd-mobile'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { TabBar } from 'antd-mobile'
 import {
   AppOutline,
   ContentOutline,
@@ -11,7 +11,7 @@ import styles from './index.module.css'
 const Footer = () => {
   const tabs = [
     {
-      key: '/',
+      key: '/index',
       title: '首页',
       icon: <AppOutline />
     },
@@ -48,13 +48,11 @@ const Footer = () => {
   )
 }
 
-const Home = () => {
+const Tabbar = () => {
   return (
     <div className={styles.app}>
       <div className={styles.body}>
         <Outlet />
-        <h1 className={styles.test}>Hello World</h1>
-        <Link to="city-list">城市选择页面</Link>
       </div>
       <footer className={styles.footer}>
         <Footer />
@@ -63,4 +61,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Tabbar

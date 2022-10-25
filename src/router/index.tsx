@@ -1,15 +1,25 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 
-import Home from '../pages/Home'
-import News from '../pages/Home/News'
+import Tabbar from '../pages/Tabbar'
+import Index from '../pages/Tabbar/Index'
+import News from '../pages/Tabbar/News'
 
 import CityList from '../pages/CityList'
 
 const router = createBrowserRouter([
+  // 重定向
   {
     path: '/',
-    element: <Home />,
+    element: <Navigate to='/index' replace />
+  },
+  {
+    path: '/',
+    element: <Tabbar />,
     children: [
+      {
+        path: 'index',
+        element: <Index />
+      },
       {
         path: 'news',
         element: <News />
@@ -20,6 +30,11 @@ const router = createBrowserRouter([
     path: 'city-list',
     element: <CityList />,
   },
-]);
+  // 通配符跳转
+  {
+    path: '*',
+    element: <Navigate to='/index' />
+  }
+])
 
 export default router

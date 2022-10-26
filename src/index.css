@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
 :root:root {
   --adm-color-primary: #21b97a;
 }

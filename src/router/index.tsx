@@ -1,8 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 
-import Tabbar from '../pages/Tabbar'
-import Index from '../pages/Tabbar/Index'
-import News from '../pages/Tabbar/News'
+import Tabbar from '@/pages/Tabbar'
+import Index from '@/pages/Tabbar/Index'
+import News from '@/pages/Tabbar/News'
+
+import Map from '@/pages/Map'
 
 import CityList from '../pages/CityList'
 
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: 'city-list',
     element: <CityList />,
+  },
+  {
+    path: 'map',
+    element: <Map />
   },
   // 通配符跳转
   {

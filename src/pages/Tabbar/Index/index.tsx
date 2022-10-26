@@ -8,6 +8,11 @@ import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
 import NavHeader from '@/components/NavHeader'
 
+// 获取地理位置信息
+navigator.geolocation.getCurrentPosition(position => {
+  console.log(position)
+})
+
 function RenderSwipers () {
   // 获取轮播图数据
   const [swipers, setSwipers] = useState([])

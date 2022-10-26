@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Swiper, Toast, Image, Grid } from 'antd-mobile'
 import styles from './index.module.css'
-import { getSwipers } from '../../../apis'
-import nav1 from '../../../assets/images/nav-1.png'
-import nav2 from '../../../assets/images/nav-2.png'
-import nav3 from '../../../assets/images/nav-3.png'
-import nav4 from '../../../assets/images/nav-4.png'
+import { getSwipers } from '@/apis'
+import nav1 from '@/assets/images/nav-1.png'
+import nav2 from '@/assets/images/nav-2.png'
+import nav3 from '@/assets/images/nav-3.png'
+import nav4 from '@/assets/images/nav-4.png'
 
 function RenderSwipers (swipers = []) {
   return (

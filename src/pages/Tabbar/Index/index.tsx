@@ -6,31 +6,42 @@ import nav1 from '@/assets/images/nav-1.png'
 import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
+import NavHeader from '@/components/NavHeader'
 
 function RenderSwipers () {
   // 获取轮播图数据
   const [swipers, setSwipers] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
   async function getSwipersData() {
     const { code, data } = await getSwipers()
     if (code === 200) {
       setSwipers(data)
+      setIsLoaded(true)
     }
   }
   useEffect(() => {
     getSwipersData()
   }, [])
   return (
-    swipers.map((item: any, index) => (
-      <Swiper.Item key={item.id}>
-        <Image 
-          src={'http://localhost:8080' + item.imgSrc}
-          width='100%'
-          onClick={() => {
-            Toast.show(`你点击了卡片 ${index + 1}`)
-          }}
-        />
-      </Swiper.Item>
-    ))
+    <>
+    {
+      isLoaded && (<Swiper loop autoplay>
+      {
+        swipers.map((item: any, index) => (
+          <Swiper.Item key={item.id}>
+            <Image 
+              src={'http://localhost:8080' + item.imgSrc}
+              width='100%'
+              onClick={() => {
+                Toast.show(`你点击了卡片 ${index + 1}`)
+              }}
+            />
+          </Swiper.Item>
+        ))
+      }
+      </Swiper>)
+    }
+    </>
   )
 }
 function RenderNavigations () {
@@ -114,13 +125,6 @@ function RenderNews () {
             <span>{item.date}</span>
           </div>
         </div>
-        {/* <Flex className="content" direction="column" justify="between">
-          <h3 className="title">{item.title}</h3>
-          <Flex className="info" justify="between">
-            <span>{item.from}</span>
-            <span>{item.date}</span>
-          </Flex>
-        </Flex> */}
       </div>
     ))
   )
@@ -131,7 +135,10 @@ function Index () {
   return (
     <div>
       {/* 轮播图 */}
-      <Swiper loop autoplay>{ RenderSwipers() }</Swiper>
+      <section className={styles.swiper}>
+        { RenderSwipers() }
+        <NavHeader cityName='北京' className='' />
+      </section>
 
       {/* 导航菜单 */}
       <section className={styles.navigation}>

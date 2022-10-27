@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
-// import { getAreaInfo } from '@/apis/area'
-export function useCitys () {
-  const [citys, setCitys] = useState([])
+import { useState } from 'react'
 
-  if (citys.length) return citys
+export function useCurrentCity () {
+  const [currentCity, setCurrentCity] = useState([])
 
-  return citys
+  function saveCurrentCity (data: []) {
+    setCurrentCity(data)
+  }
+
+  return [currentCity, saveCurrentCity]
 }

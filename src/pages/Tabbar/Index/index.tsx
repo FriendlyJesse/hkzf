@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Swiper, Toast, Image, Grid } from 'antd-mobile'
-import styles from './index.module.css'
+import NavHeader from '@/components/NavHeader'
 import { getSwipers, getGroups, getNews } from '@/apis'
 import { getAreaInfo } from '@/apis/area'
+import { getCurrentCity } from '@/utils'
+import { useCurrentCity } from '@/hooks'
+import styles from './index.module.css'
 import nav1 from '@/assets/images/nav-1.png'
 import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
-import NavHeader from '@/components/NavHeader'
 
 
 function RenderSwipers () {
@@ -63,6 +65,10 @@ function RenderHeader () {
     })
   }
   useEffect(() => {
+    if (localStorage.getItem('currentCity')) {
+      let currentCity = JSON.parse(localStorage.getItem('currentCity') ?? '')
+      return setCurrentCityName(currentCity.label)
+    }
     getCity()
   }, [])
 

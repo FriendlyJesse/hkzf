@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { IndexBar, List, NavBar } from 'antd-mobile'
+import { IndexBar, List, NavBar, Toast } from 'antd-mobile'
 import{ getAreaCity, getAreaHot } from '@/apis/area'
 import { getCurrentCity } from '@/utils'
 import './index.scss'
 
+const HOUSE_CITY = ['北京', '上海', '广州', '深圳']
 const charCodeOfA = 'A'.charCodeAt(0)
 const groups: any = Array(26)
   .fill('')
@@ -54,6 +55,12 @@ function CityList () {
     }
   }
 
+  function handleItemClick (item: any) {
+    if (!HOUSE_CITY.includes(item.label)) return Toast.show({ content: '暂无数据' })
+    localStorage.setItem('currentCity', JSON.stringify(item))
+    navigate(-1)
+  }
+
   useEffect(() => {
     Promise.all([getCurrentCityData(), getAreaCityData(), getAreaHotData()]).then(res => {
       setGroup(groups)
@@ -76,7 +83,7 @@ function CityList () {
             >
               <List>
                 {items.map((item: any) => (
-                  <List.Item key={item.value}>{item.label}</List.Item>
+                  <List.Item key={item.value} onClick={() => handleItemClick(item)}>{item.label}</List.Item>
                 ))}
               </List>
             </IndexBar.Panel>

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 export function useCurrentCity () {
-  const [currentCity, setCurrentCity] = useState([])
+  const [currentCity, setCurrentCity] = useState({})
 
-  function saveCurrentCity (data: []) {
+  function saveCurrentCity (data: {}) {
     setCurrentCity(data)
   }
 

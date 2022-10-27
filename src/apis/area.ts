@@ -1,0 +1,5 @@
+import { http } from '@/utils/http'
+
+export const getArea = (params: { id: string }) => http.get('/area', { params })
+export const getAreaInfo = (params: { name: string }) => http.get('/area/info', { params })
+export const getAreaCity = (params: { level: number }) => http.get('/area/city', { params })

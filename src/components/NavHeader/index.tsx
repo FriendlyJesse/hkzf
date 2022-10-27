@@ -1,4 +1,4 @@
-// import styles from './index.module.css'
+import { useNavigate } from 'react-router-dom'
 import './index.scss'
 
 type SearchHeaderParams = {
@@ -6,11 +6,14 @@ type SearchHeaderParams = {
   className: ''
 }
 
+
 function SearchHeader({ cityName, className }: SearchHeaderParams) {
+  const navigate = useNavigate()
+
   return (
     <div className={['search-box', className || ''].join('')}>
       <div className='search'>
-        <div className="location" onClick={() => {}}>
+        <div className="location" onClick={() => navigate('/city-list')}>
           <span className="name">{cityName}</span>
           <i className="iconfont icon-arrow" />
         </div>

@@ -2,16 +2,13 @@ import { useEffect, useState } from 'react'
 import { Swiper, Toast, Image, Grid } from 'antd-mobile'
 import styles from './index.module.css'
 import { getSwipers, getGroups, getNews } from '@/apis'
+import { getAreaInfo } from '@/apis/area'
 import nav1 from '@/assets/images/nav-1.png'
 import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
 import NavHeader from '@/components/NavHeader'
 
-// 获取地理位置信息
-navigator.geolocation.getCurrentPosition(position => {
-  console.log(position)
-})
 
 function RenderSwipers () {
   // 获取轮播图数据
@@ -49,6 +46,28 @@ function RenderSwipers () {
     </>
   )
 }
+function RenderHeader () {
+  // 获取地理位置信息
+  // navigator.geolocation.getCurrentPosition(position => {
+  //   console.log(position)
+  // })
+  const [currentCityName, setCurrentCityName] = useState('定位中')
+
+  function getCity () {
+    const myCity = new BMapGL.LocalCity()
+    myCity.get(async (res: any) => {
+      const { code, data } = await getAreaInfo({ name: res.name })
+      if (code === 200) {
+        setCurrentCityName(data.label)
+      }
+    })
+  }
+  useEffect(() => {
+    getCity()
+  }, [])
+
+  return <NavHeader cityName={currentCityName} className='' />
+}
 function RenderNavigations () {
   const navs = [
     {
@@ -84,7 +103,7 @@ function RenderGroups () {
   // 获取租房小组数据
   const [group, setGroups] = useState([])
   async function getGroupsData () {
-    const { code, data } = await getGroups()
+    const { code, data } = await getGroups({ area: 'AREA|88cff55c-aaa4-e2e0' })
     if (code === 200) {
       setGroups(data)
     }
@@ -109,7 +128,7 @@ function RenderNews () {
   // 获取资讯数据
   const [news, setNews] = useState([])
   async function getNewsData () {
-    const { code, data } = await getNews()
+    const { code, data } = await getNews({ area: 'AREA|88cff55c-aaa4-e2e0' })
     if (code === 200) {
       setNews(data)
     }
@@ -142,7 +161,7 @@ function Index () {
       {/* 轮播图 */}
       <section className={styles.swiper}>
         { RenderSwipers() }
-        <NavHeader cityName='北京' className='' />
+        { RenderHeader() }
       </section>
 
       {/* 导航菜单 */}

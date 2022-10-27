@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IndexBar, List, NavBar } from 'antd-mobile'
-import{ getAreaCity } from '@/apis/area'
+import{ getAreaCity, getAreaHot } from '@/apis/area'
+import { getCurrentCity } from '@/utils'
 import './index.scss'
 
 const charCodeOfA = 'A'.charCodeAt(0)
-const groups = Array(26)
+const groups: any = Array(26)
   .fill('')
   .map((_, i) => ({
     title: String.fromCharCode(charCodeOfA + i),
@@ -14,11 +15,21 @@ const groups = Array(26)
 groups.unshift({
   title: '#',
   items: []
+}, {
+  title: '热',
+  items: []
 })
 
 function CityList () {
   const navigate = useNavigate()
   const [group, setGroup] = useState({})
+  
+  async function getCurrentCityData () {
+    const res = await getCurrentCity()
+    groups.map((item: any) => {
+      if (item.title === '#') item.items = [res]
+    })
+  }
   async function getAreaCityData () {
     const { code, data } = await getAreaCity({ level: 1 })
     if (code === 200) {
@@ -30,12 +41,23 @@ function CityList () {
           }
         })
       })
-      setGroup(groups)
+      return true
+    }
+  }
+  async function getAreaHotData () {
+    const { code, data } = await getAreaHot()
+    if (code === 200) {
+      groups.map((item: any) => {
+        if (item.title === '热') item.items = data
+      })
+      return true
     }
   }
 
   useEffect(() => {
-    getAreaCityData()
+    Promise.all([getCurrentCityData(), getAreaCityData(), getAreaHotData()]).then(res => {
+      setGroup(groups)
+    })
   }, [])
 
   return (
@@ -49,7 +71,7 @@ function CityList () {
           return (
             <IndexBar.Panel
               index={title}
-              title={title}
+              title={title === '热' ? '热门' : title === '#' ? '当前城市' : title}
               key={title}
             >
               <List>

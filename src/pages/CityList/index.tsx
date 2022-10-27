@@ -7,23 +7,28 @@ import './index.scss'
 
 const HOUSE_CITY = ['北京', '上海', '广州', '深圳']
 const charCodeOfA = 'A'.charCodeAt(0)
-const groups: any = Array(26)
-  .fill('')
-  .map((_, i) => ({
-    title: String.fromCharCode(charCodeOfA + i),
-    items: [],
-  }))
-groups.unshift({
-  title: '#',
-  items: []
-}, {
-  title: '热',
-  items: []
-})
+
+let groups: any
+function init () {
+  groups = Array(26)
+    .fill('')
+    .map((_, i) => ({
+      title: String.fromCharCode(charCodeOfA + i),
+      items: [],
+    }))
+  groups.unshift({
+    title: '#',
+    items: []
+  }, {
+    title: '热',
+    items: []
+  })
+}
+init()
 
 function CityList () {
   const navigate = useNavigate()
-  const [group, setGroup] = useState({})
+  const [group, setGroup] = useState<any>([])
   
   async function getCurrentCityData () {
     const res = await getCurrentCity()
@@ -62,9 +67,10 @@ function CityList () {
   }
 
   useEffect(() => {
-    Promise.all([getCurrentCityData(), getAreaCityData(), getAreaHotData()]).then(res => {
+    Promise.all([getCurrentCityData(), getAreaCityData(), getAreaHotData()]).then(() => {
       setGroup(groups)
     })
+    return init()
   }, [])
 
   return (
@@ -73,7 +79,7 @@ function CityList () {
         <NavBar onBack={() => navigate(-1) }>城市选择</NavBar>
       </div>
       <IndexBar>
-        {Object.values(group).map((group: any) => {
+        {group.map((group: any) => {
           const { title, items } = group
           return (
             <IndexBar.Panel

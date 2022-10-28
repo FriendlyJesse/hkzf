@@ -216,7 +216,7 @@ function RenderMap () {
 
   return (
     <div className={styles.map}>
-      <NavHeader title='地图找房' style={{ position: 'static', width: '100%' }} />
+      <NavHeader title='地图找房' />
       <div id="container" style={{height: '100%'}}></div>
       {/* { FloatingList() } */}
       <FloatingList floatingHeight={floatingHeight} />

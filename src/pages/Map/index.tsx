@@ -198,14 +198,14 @@ function RenderMap () {
   async function getHousesData (id: string) {
     Toast.show({
       icon: 'loading',
-      content: '加载中…',
+      content: '房源加载中…',
       duration: 0
     })
     const { code, data } = await getHouses({ id })
+    Toast.clear()
     if (code === 200) {
       return data
     }
-    Toast.clear()
   }
 
   useEffect(() => {

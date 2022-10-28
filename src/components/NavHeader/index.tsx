@@ -3,14 +3,15 @@ import { NavBar } from 'antd-mobile'
 import './index.scss'
 
 type Props = {
-  title: string
+  title: string,
+  style?: object
 }
 
-function NavHeader ({ title }: Props) {
+function NavHeader ({ title, style }: Props) {
   const navigate = useNavigate()
 
   return (
-    <div className='navgation'>
+    <div className='navgation' style={style}>
       <NavBar onBack={() => navigate(-1) }>{ title }</NavBar>
     </div>
   )

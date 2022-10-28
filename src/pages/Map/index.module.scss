@@ -1,0 +1,99 @@
+.map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.bubble {
+  width: 70px;
+  height: 70px;
+  line-height: 1;
+  display: inline-block;
+  position: absolute;
+  border-radius: 100%;
+  background: rgba(12, 181, 106, 0.9);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  text-align: center;
+  cursor: pointer;
+}
+
+.name {
+  padding: 22px 0 6px 0;
+}
+
+
+.rect {
+  height: 20px;
+  line-height: 19px;
+  width: 100px;
+  padding: 0 3px;
+  border-radius: 3px;
+  position: absolute;
+  background: rgba(12, 181, 106, 0.9);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.arrow {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border: 4px solid transparent;
+  border-top-width: 4px;
+  border-top-color: #00a75b;
+}
+
+.housename {
+  display: inline-block;
+  width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.housenum {
+  display: inline-block;
+  width: 20px;
+}
+
+
+
+.search {
+  padding: 0 12px 12px;
+  background-color: var(--adm-color-background);
+
+  :global {
+    .adm-space-item:first-child {
+      flex: 1;
+    }
+
+    .adm-search-bar-cancel-button.adm-button {
+      padding: 3px 2px;
+      color: var(--adm-color-primary);
+      font-size: 16px;
+    }
+  }
+}
+
+.avatar {
+  --size: 32px;
+  --border-radius: 50%;
+}
+
+.item {
+  text-align: center;
+  font-size: 14px;
+}
+
+.map {
+  border: 0;
+  width: calc(100vw + 800px);
+  height: calc(100vh + 800px);
+  position: fixed;
+  z-index: 0;
+  left: -400px;
+  top: -400px;
+}

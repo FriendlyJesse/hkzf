@@ -24,7 +24,7 @@ function SearchHeader({ cityName, className }: SearchHeaderParams) {
           <span className="text">请输入小区或地址</span>
         </div>
       </div>
-      <i className="iconfont icon-map" onClick={() => {}} />
+      <i className="iconfont icon-map" onClick={() => navigate('/map')} />
     </div>
   )
 }

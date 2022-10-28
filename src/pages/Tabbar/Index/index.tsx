@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Swiper, Toast, Image, Grid } from 'antd-mobile'
-import NavHeader from '@/components/NavHeader'
+import SearchHeader from '@/components/SearchHeader'
 import { getSwipers, getGroups, getNews } from '@/apis'
-import { getAreaInfo } from '@/apis/area'
+import { getCurrentCity } from '@/utils'
 import styles from './index.module.css'
 import nav1 from '@/assets/images/nav-1.png'
 import nav2 from '@/assets/images/nav-2.png'
@@ -53,24 +53,18 @@ function RenderHeader () {
   // })
   const [currentCityName, setCurrentCityName] = useState('定位中')
 
-  function getCity () {
-    const myCity = new BMapGL.LocalCity()
-    myCity.get(async (res: any) => {
-      const { code, data } = await getAreaInfo({ name: res.name })
-      if (code === 200) {
-        setCurrentCityName(data.label)
-      }
-    })
+  async function getCity () {
+    const res = await getCurrentCity()
+    if (res) {
+      setCurrentCityName(res.label)
+    }
+    
   }
   useEffect(() => {
-    if (localStorage.getItem('currentCity')) {
-      let currentCity = JSON.parse(localStorage.getItem('currentCity') ?? '')
-      return setCurrentCityName(currentCity.label)
-    }
     getCity()
   }, [])
 
-  return <NavHeader cityName={currentCityName} className='' />
+  return <SearchHeader cityName={currentCityName} className='' />
 }
 function RenderNavigations () {
   const navs = [

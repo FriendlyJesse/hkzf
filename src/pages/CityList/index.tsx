@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { IndexBar, List, NavBar, Toast } from 'antd-mobile'
+import { IndexBar, List, Toast } from 'antd-mobile'
+import NavHeader from '@/components/NavHeader'
 import{ getAreaCity, getAreaHot } from '@/apis/area'
 import { getCurrentCity } from '@/utils'
 import './index.scss'
@@ -34,6 +35,7 @@ function CityList () {
     const res = await getCurrentCity()
     groups.map((item: any) => {
       if (item.title === '#') item.items = [res]
+      return item
     })
   }
   async function getAreaCityData () {
@@ -45,7 +47,9 @@ function CityList () {
           if (firstStr === el.title) {
             el.items.push(item)
           }
+          return el
         })
+        return item
       })
       return true
     }
@@ -55,6 +59,7 @@ function CityList () {
     if (code === 200) {
       groups.map((item: any) => {
         if (item.title === '热') item.items = data
+        return item
       })
       return true
     }
@@ -75,9 +80,7 @@ function CityList () {
 
   return (
     <div className='city-list'>
-      <div className='navgation'>
-        <NavBar onBack={() => navigate(-1) }>城市选择</NavBar>
-      </div>
+      <NavHeader title='城市选择' />
       <IndexBar>
         {group.map((group: any) => {
           const { title, items } = group

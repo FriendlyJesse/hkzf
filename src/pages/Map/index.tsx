@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { FloatingPanel, ErrorBlock, List } from 'antd-mobile'
+import { FloatingPanel, ErrorBlock, List, Toast } from 'antd-mobile'
 import NavHeader from '@/components/NavHeader'
 import HouseItem from '@/components/HouseItem'
 import styles from './index.module.scss'
@@ -38,6 +38,11 @@ function RenderMap () {
   }
 
   async function renderOverlays (id: string) { // 渲染房源覆盖物
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…',
+      duration: 0
+    })
     const { code, data } = await getAreaMap({ id })
     if (code === 200) {
       data.forEach((item: any) => {
@@ -45,6 +50,7 @@ function RenderMap () {
         createOverlays(type, nextZoom, item)
       })
     }
+    Toast.clear()
   }
 
   function createOverlays (type: string, nextZoom: number, item: any) { // 创建覆盖物
@@ -190,10 +196,16 @@ function RenderMap () {
   }
   // 获取房源具体数据
   async function getHousesData (id: string) {
+    Toast.show({
+      icon: 'loading',
+      content: '加载中…',
+      duration: 0
+    })
     const { code, data } = await getHouses({ id })
     if (code === 200) {
       return data
     }
+    Toast.clear()
   }
 
   useEffect(() => {

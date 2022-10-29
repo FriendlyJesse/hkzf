@@ -7,6 +7,10 @@
   flex: 1;
 }
 .footer {
+  position: fixed;
+  bottom: 0;
+  background: white;
+  width: 100%;
   flex: 0;
   border-top: solid 1px var(--adm-border-color)
 }

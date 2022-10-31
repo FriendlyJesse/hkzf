@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react'
-import { SearchBar, Dropdown, CascadePickerView, Button } from 'antd-mobile'
+import { SearchBar, Dropdown, CascadePickerView } from 'antd-mobile'
 import styles from './index.module.scss'
 import { getConditions } from '@/apis/houses'
 
 function RenderOptions () {
-  const params: { [key: string]: string } = {
-    area: '',
-    subway: '',
-    rentType: '',
-    price: ''
-  }
+
   const [conditions, setConditions] = useState<any>([])
   const [more, setMore] = useState({})
 
@@ -55,31 +50,38 @@ function RenderOptions () {
   // 清除数组中的null
   function valueFormatter (value: any[]) {
     return value.filter(item => {
-      return (item !== null && item !== 'null') 
+      return (item !== null) 
     })
+  }
+
+  // 递归获取 label 数组
+  function findLabels (data: any[], option: any[], arr: any[], i = 1): any {
+    const item = data.find((item: any) => item.value === option[i])
+    if (item.value !== 'null') arr.push({ label: item.label, value: item.value })
+    if (item.children) return findLabels(item.children, option, arr, ++i)
+    
+    return arr
   }
 
   function handlePickerChange (option: any[], item: any) {
     const { name, options } = item
     const newOption = valueFormatter(option)
     const optionItem = option[0]
-
+    // 修改数据
     const newConditions = conditions.map((el: any) => {
-      // 修改数据
-      if (el.name === 'area') {
-        console.log(el)
-        // console.log(newOption)
-        // console.log(el)
-        // console.log(arr)
-        // console.log(arr)
-        // newOption.forEach((_: any) => {
-
-          // let arr = []
-          // el.options.find((elChild: any) => {
-          //   elChild
-          // })
-        // })
-      } else if (el.name === name) {
+      // name 与 el.name 锚定当前选项
+      if (el.name === 'area' && name === 'area') {
+        const _ = options.find((item: any) => item.value === newOption[0])
+        const res = findLabels(_.children, newOption, [])
+        if (res.length) {
+          const dataItem: any = res[res.length - 1]
+          el.label = dataItem.label
+          el.value = dataItem.value
+        } else {
+          el.label = el.showLabel
+          el.value = ''
+        }
+      } else if (el.name === name && el.name !== 'more') {
         const dataItem = options.find((_: any) => _.value === optionItem)
         if (dataItem.value === 'null') {
           el.label = el.showLabel
@@ -92,34 +94,6 @@ function RenderOptions () {
       return el
     })
     setConditions(newConditions)
-
-    // 区域
-    // if (name === 'area') {
-    //   const newVal = valueFormatter(option)
-    //   const lastItem = newVal[newVal.length - 1]
-    //   if (option.includes('area')) {
-    //     params.area = lastItem !== 'area' ? lastItem : ''
-    //     params.subway = ''
-    //   } else if (option.includes('subway')) {
-    //     params.subway = lastItem !== 'subway' ? lastItem : ''
-    //     params.area = ''
-    //   }
-    //   console.log(option)
-    //   const newConditions = conditions.map((el: any) => {
-    //     if (el.name === name) {
-    //       console.log(el)
-    //       // 写入新的正确数据
-    //       console.log()
-    //     }
-    //     return el
-    //   })
-
-    // } else {
-    //   const optionItem = option[0]
-    //   params[name] = optionItem
-
-      
-    // }
   }
 
   useEffect(() => {
@@ -134,12 +108,12 @@ function RenderOptions () {
           if (label === 'more') return <Dropdown.Item key={label} title={label} />
           return (
             <Dropdown.Item key={name} title={label} highlight={value}>
-              <CascadePickerView
-                options={options}
-                onChange={(value) => handlePickerChange(value, item)}
-              />
-              <Button>取消</Button>
-              <Button>确定</Button>
+              {
+                name !== 'more' ? <CascadePickerView
+                  options={options}
+                  onChange={(value) => handlePickerChange(value, item)}
+                /> : ''
+              }
             </Dropdown.Item>
           )
         }) : ''

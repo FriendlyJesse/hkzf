@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Tabbar from '@/pages/Tabbar'
 import Index from '@/pages/Tabbar/Index'
 import News from '@/pages/Tabbar/News'
+import Find from '@/pages/Tabbar/Find'
 
 import Map from '@/pages/Map'
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: 'index',
         element: <Index />
+      },
+      {
+        path: 'find',
+        element: <Find />
       },
       {
         path: 'news',

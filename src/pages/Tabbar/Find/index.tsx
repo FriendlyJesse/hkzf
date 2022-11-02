@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { SearchBar, Dropdown, CascadePickerView } from 'antd-mobile'
+import { SearchBar, Dropdown, CascadePickerView, List, ErrorBlock, InfiniteScroll, PullToRefresh } from 'antd-mobile'
 import styles from './index.module.scss'
-import { getConditions } from '@/apis/houses'
+import { getConditions, getHouses } from '@/apis/houses'
+import HouseItem from '@/components/HouseItem'
 
 function RenderOptions () {
 
@@ -122,15 +123,68 @@ function RenderOptions () {
   )
 }
 
+let i = 1
+function RenderList () {
+  const [houses, setHouses] = useState<any>([])
+  const [hasMore, setHasMore] = useState(true)
+  
+  async function getHousesData () {
+    const { code, data } = await getHouses({
+      cityId: 'AREA|88cff55c-aaa4-e2e0',
+      start: i,
+      end: i + 21
+    })
+    if (code === 200) {
+      i += 21
+      console.log(i)
+      setHouses([...houses, ...data.list])
+      setHasMore(houses.length <= data.count)
+    }
+  }
+
+  async function handleRefresh () {
+    i = 1
+    getHousesData()
+  }
+
+  useEffect(() => {
+    // getHousesData()
+    // eslint-disable-next-line
+  }, [])
+
+  return (
+    <PullToRefresh onRefresh={handleRefresh}>
+      <List>
+        {
+          houses.length ? houses.map((item: any) => (
+            <List.Item key={item.houseCode}>
+              <HouseItem
+                src={process.env.REACT_APP_BASIC_URL + item.houseImg}
+                title={item.title}
+                desc={item.desc}
+                tags={item.tags}
+                price={item.price}
+              />
+            </List.Item>
+          ))
+            : <div style={{ marginBottom: '150px' }}><ErrorBlock status='empty' /></div>
+        }
+      </List>
+      <InfiniteScroll loadMore={getHousesData} hasMore={hasMore} />
+    </PullToRefresh>
+  )
+}
+
 function Find () {
   return (
-    <div>
+    <div className={styles.find}>
       <header className={styles.top}>
         <SearchBar placeholder='请输入内容' />
         <div className={styles.options}>
           <RenderOptions />
         </div>
       </header>
+      <RenderList />
     </div>
   )
 }

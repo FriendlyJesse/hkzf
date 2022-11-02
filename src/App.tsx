@@ -5,9 +5,9 @@ import './App.css'
 
 function App () {
   return (
-    // <StrictMode>
+    <StrictMode>
       <RouterProvider router={router} />
-    // </StrictMode>
+    </StrictMode>
   )
 }
 

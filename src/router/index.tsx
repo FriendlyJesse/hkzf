@@ -4,6 +4,7 @@ import Tabbar from '@/pages/Tabbar'
 import Index from '@/pages/Tabbar/Index'
 import News from '@/pages/Tabbar/News'
 import Find from '@/pages/Tabbar/Find'
+import Mine from '@/pages/Tabbar/Mine'
 
 import Map from '@/pages/Map'
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'news',
         element: <News />
+      },
+      {
+        path: 'mine',
+        element: <Mine />
       }
     ]
   },

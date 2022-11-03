@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Button, Grid } from 'antd-mobile'
 import styles from './index.module.scss'
 
@@ -19,12 +20,14 @@ const menus = [
 ]
 
 function RenderGrid () {
+  const navigate = useNavigate()
+
   return (
     <div className={styles.gril_wrap}>
       <Grid columns={3} gap={30}>
         {
           menus.map(item => (
-            <Grid.Item key={item.id}>
+            <Grid.Item key={item.id} onClick={() => (item.to != null) && navigate(item.to)}>
               <div className={styles.menuItem}>
                 <i className={`iconfont ${item.iconfont}`} />
                 <span>{item.name}</span>
@@ -38,6 +41,7 @@ function RenderGrid () {
 }
 
 function Mine () {
+  const navigate = useNavigate()
   return (
     <div>
       <div className={styles.title}>
@@ -57,7 +61,7 @@ function Mine () {
           <div className={styles.user}>
             <div className={styles.name}>{'游客'}</div>
             <div className={styles.edit}>
-              <Button color='primary' size='small'>去登录</Button>
+              <Button color='primary' size='small' onClick={() => navigate('/login')}>去登录</Button>
             </div>
           </div>
         </div>

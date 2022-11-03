@@ -7,8 +7,9 @@ import Find from '@/pages/Tabbar/Find'
 import Mine from '@/pages/Tabbar/Mine'
 
 import Map from '@/pages/Map'
-
-import CityList from '../pages/CityList'
+import CityList from '@/pages/CityList'
+import Rent from '@/pages/Rent'
+import Login from '@/pages/Login'
 
 const router = createBrowserRouter([
   // 重定向
@@ -40,11 +41,19 @@ const router = createBrowserRouter([
   },
   {
     path: 'city-list',
-    element: <CityList />,
+    element: <CityList />
   },
   {
     path: 'map',
     element: <Map />
+  },
+  {
+    path: 'rent',
+    element: <Rent />
+  },
+  {
+    path: 'login',
+    element: <Login />
   },
   // 通配符跳转
   {

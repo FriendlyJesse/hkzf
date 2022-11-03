@@ -9,12 +9,11 @@ import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
 
-
 function RenderSwipers () {
   // 获取轮播图数据
   const [swipers, setSwipers] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
-  async function getSwipersData() {
+  async function getSwipersData () {
     const { code, data } = await getSwipers()
     if (code === 200) {
       setSwipers(data)
@@ -22,7 +21,7 @@ function RenderSwipers () {
     }
   }
   useEffect(() => {
-    getSwipersData()
+    void getSwipersData()
   }, [])
   return (
     <>
@@ -31,8 +30,8 @@ function RenderSwipers () {
       {
         swipers.map((item: any, index) => (
           <Swiper.Item key={item.id}>
-            <Image 
-              src={'http://localhost:8080' + item.imgSrc}
+            <Image
+              src={'http://localhost:8080' + (item.imgSrc as string)}
               width='100%'
               onClick={() => {
                 Toast.show(`你点击了卡片 ${index + 1}`)
@@ -58,10 +57,9 @@ function RenderHeader () {
     if (res) {
       setCurrentCityName(res.label)
     }
-    
   }
   useEffect(() => {
-    getCity()
+    void getCity()
   }, [])
 
   return <SearchHeader cityName={currentCityName} className='' />
@@ -107,7 +105,7 @@ function RenderGroups () {
     }
   }
   useEffect(() => {
-    getGroupsData()
+    void getGroupsData()
   }, [])
 
   return group.map((item: any) => (
@@ -117,7 +115,7 @@ function RenderGroups () {
           <p className={styles.desc_title}>{item.title}</p>
           <span className={styles.desc_info}>{item.desc}</span>
         </div>
-        <Image src={'http://localhost:8080' + item.imgSrc} width={55} />
+        <Image src={'http://localhost:8080' + (item.imgSrc as string)} width={55} />
       </div>
     </Grid.Item>)
   )
@@ -132,13 +130,13 @@ function RenderNews () {
     }
   }
   useEffect(() => {
-    getNewsData()
+    void getNewsData()
   }, [])
   return (
     news.map((item: any) => (
       <div className={styles.news_item} key={item.id}>
         <div className={styles.imgwrap}>
-          <Image src={`http://localhost:8080${item.imgSrc}`} width={120} height={90} />
+          <Image src={`http://localhost:8080${(item.imgSrc as string)}`} width={120} height={90} />
         </div>
         <div className={styles.news_content}>
           <h3 className={styles.news_title}>{item.title}</h3>
@@ -153,7 +151,6 @@ function RenderNews () {
 }
 
 function Index () {
-
   return (
     <div>
       {/* 轮播图 */}

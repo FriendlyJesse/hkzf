@@ -21,14 +21,15 @@ function RenderMap () {
     const { label } = await getCurrentCity()
     const myGeo = new BMapGL.Geocoder()
     myGeo.getPoint(label, (point: any) => {
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (!point) return alert('您选择的地址没有解析到结果！')
       map.centerAndZoom(point, 11)
     }, label)
 
     // 添加比例尺控件
-    const scaleCtrl = new BMapGL.ScaleControl() 
+    const scaleCtrl = new BMapGL.ScaleControl()
     map.addControl(scaleCtrl)
-    const zoomCtrl = new BMapGL.ZoomControl()  // 添加缩放控件
+    const zoomCtrl = new BMapGL.ZoomControl() // 添加缩放控件
     map.addControl(zoomCtrl)
 
     // 绑定事件
@@ -86,7 +87,7 @@ function RenderMap () {
       map.centerAndZoom(areaPoint, nextZoom)
       map.clearOverlays()
       // 从区级获取街区的房源数据数据
-      renderOverlays(label.id)
+      void renderOverlays(label.id)
     })
     map.addOverlay(label)
   }
@@ -119,7 +120,6 @@ function RenderMap () {
     })
     map.addOverlay(label)
   }
-  
 
   /**
    * 缩放级别：
@@ -135,7 +135,7 @@ function RenderMap () {
     if (zoom >= 10 && zoom < 12) { // 区
       type = 'circle'
       nextZoom = 13
-    } else if (zoom >=12 && zoom < 14) { // 街道
+    } else if (zoom >= 12 && zoom < 14) { // 街道
       type = 'circle'
       nextZoom = 15
     } else if (zoom >= 14 && zoom < 16) { // 小区
@@ -147,6 +147,7 @@ function RenderMap () {
   // 悬浮列表
   function FloatingList ({ floatingHeight }: { floatingHeight: number }) {
     // const [focus, setFocus] = useState(false)
+    const { VITE_APP_BASIC_URL } = import.meta.env
     const ref: any = useRef(null)
     const anchors = [72, 72 + 119, window.innerHeight * 0.8]
 
@@ -171,18 +172,19 @@ function RenderMap () {
         </Space> */}
         <List header='房屋列表'>
           {
-            houses.length ? houses.map((item: any) => (
+            (houses.length > 0)
+              ? houses.map((item: any) => (
               <List.Item key={item.houseCode}>
                 <HouseItem
-                  src={import.meta.env.VITE_APP_BASIC_URL + item.houseImg}
+                  src={VITE_APP_BASIC_URL + (item.houseImg as string)}
                   title={item.title}
                   desc={item.desc}
                   tags={item.tags}
                   price={item.price}
                 />
               </List.Item>
-            ))
-            : <div style={{marginBottom: '150px'}}><ErrorBlock status='empty' /></div>
+              ))
+              : <div style={{ marginBottom: '150px' }}><ErrorBlock status='empty' /></div>
           }
         </List>
       </FloatingPanel>
@@ -192,7 +194,7 @@ function RenderMap () {
   // 从城市获取区级的房源数据
   async function getAreaMapData () {
     const { value } = await getCurrentCity()
-    renderOverlays(value)
+    void renderOverlays(value)
   }
   // 获取房源具体数据
   async function getHousesData (id: string) {
@@ -209,15 +211,14 @@ function RenderMap () {
   }
 
   useEffect(() => {
-    initMap()
-    getAreaMapData()
-  // eslint-disable-next-line
+    void initMap()
+    void getAreaMapData()
   }, [])
 
   return (
     <div className={styles.map}>
       <NavHeader title='地图找房' />
-      <div id="container" style={{height: '100%'}}></div>
+      <div id="container" style={{ height: '100%' }}></div>
       {/* { FloatingList() } */}
       <FloatingList floatingHeight={floatingHeight} />
     </div>

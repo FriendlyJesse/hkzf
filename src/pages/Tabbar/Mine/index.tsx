@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom'
-import { Button, Grid } from 'antd-mobile'
+import { useNavigate, useLoaderData } from 'react-router-dom'
+import { Button, Grid, Dialog, Toast } from 'antd-mobile'
 import styles from './index.module.scss'
-import { getUser } from '@/apis/user'
 import { useEffect, useState } from 'react'
 
 const { VITE_APP_BASIC_URL } = import.meta.env
@@ -43,32 +42,29 @@ function RenderGrid () {
 }
 
 function Mine () {
+  const navigate = useNavigate()
   // 登录状态
   const [isLogin, setIsLogin] = useState(false)
-  // 用户信息
-  const [userInfo, setUserInfo] = useState<any>({})
-  const { nickname, avatar } = userInfo
-  const navigate = useNavigate()
 
   // 登出
-  function logout () {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userInfo')
-    setIsLogin(false)
-  }
-
-  // 获取用户数据
-  async function getUserData () {
-    const { code, data } = await getUser()
-    if (code === 200) {
-      setUserInfo(data)
-      setIsLogin(true)
-      localStorage.setItem('userInfo', data)
+  async function logout () {
+    const result = await Dialog.confirm({
+      content: '是否确定退出？'
+    })
+    if (result) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('userInfo')
+      setIsLogin(false)
+      Toast.show({ content: '退出成功', position: 'bottom' })
     }
   }
 
+  // 获取用户数据
+  const userInfo: any = useLoaderData()
+  const { nickname, avatar } = userInfo ?? {}
+
   useEffect(() => {
-    void getUserData()
+    if (userInfo) setIsLogin(true)
   }, [])
 
   return (
@@ -93,7 +89,7 @@ function Mine () {
               ? (
                 <>
                   <div className={styles.auth}>
-                    <span onClick={logout}>退出</span>
+                    <span onClick={() => logout()}>退出</span>
                   </div>
                   <div className={styles.edit}>
                     编辑个人资料

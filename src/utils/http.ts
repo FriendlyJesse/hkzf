@@ -21,9 +21,17 @@ http.interceptors.request.use((config: any) => {
 
 http.interceptors.response.use((res) => {
   const { status, description, body } = res.data
+
   res.data.code = status
   res.data.msg = description
   res.data.data = body
+  if (status === 400 && res.config.url !== '/user') {
+    Toast.show({
+      icon: 'fail',
+      content: `参数错误，原因：${(description as string)}`
+    })
+  }
+
   return res.data
 }, handleError)
 

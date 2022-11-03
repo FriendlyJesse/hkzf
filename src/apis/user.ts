@@ -5,6 +5,8 @@ export interface loginParams {
   password: string
 }
 
-export const getHouses = () => http.get('/user/houses')
 export const login = (data: loginParams) => http.post('/user/login', data)
+export const register = (data: loginParams) => http.post('/user/registered', data)
+
+export const getHouses = () => http.get('/user/houses')
 export const getUser = () => http.get('/user')

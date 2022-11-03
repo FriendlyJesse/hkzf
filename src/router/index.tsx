@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate, redirect } from 'react-router-dom'
+import { createBrowserRouter, Navigate, redirect, LoaderFunctionArgs } from 'react-router-dom'
+import { Dialog } from 'antd-mobile'
 
 import Tabbar from '@/pages/Tabbar'
 import Index from '@/pages/Tabbar/Index/index'
@@ -16,10 +17,15 @@ import Register from '@/pages/Register'
 import { getUser } from '@/apis/user'
 
 // 鉴权
-function auth () {
+async function auth ({ request }: LoaderFunctionArgs) {
   const token = localStorage.getItem('token')
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  if (!token) throw redirect('/login')
+  if (!token) {
+    await Dialog.alert({
+      content: '当前未登录，正在前往登录...'
+    })
+    // eslint-disable-next-line @typescript-eslint/no-throw-literal
+    throw redirect('/login')
+  }
 }
 
 const router = createBrowserRouter([
@@ -67,8 +73,8 @@ const router = createBrowserRouter([
   },
   {
     path: 'rent',
-    async loader () {
-      auth()
+    async loader (e) {
+      await auth(e)
     },
     element: <Rent />
   },

@@ -2,10 +2,10 @@ import { useNavigate, useLoaderData } from 'react-router-dom'
 import { Button, Grid, Dialog, Toast } from 'antd-mobile'
 import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
+import { getImageUrl } from '@/utils'
 
 const { VITE_APP_BASIC_URL } = import.meta.env
-// 默认头像
-const DEFAULT_AVATAR = VITE_APP_BASIC_URL + '/img/profile/avatar.png'
+
 // 菜单
 const menus = [
   { id: 1, name: '我的收藏', iconfont: 'icon-coll', to: '/favorite' },
@@ -79,7 +79,7 @@ function Mine () {
           <div className={styles.myIcon}>
             <img
               className={styles.avatar}
-              src={avatar ?? DEFAULT_AVATAR}
+              src={avatar ?? getImageUrl('avatar.png')}
               alt="icon"
             />
           </div>
@@ -109,7 +109,7 @@ function Mine () {
       </div>
       <RenderGrid />
       <div className={styles.ad}>
-        <img src={VITE_APP_BASIC_URL + '/img/profile/join.png'} />
+        <img src={getImageUrl('join.png')} />
       </div>
     </div>
   )

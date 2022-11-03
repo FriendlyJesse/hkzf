@@ -2,7 +2,7 @@ import { getAreaInfo } from '@/apis/area'
 
 export async function getCurrentCity () {
   const currentCity = localStorage.getItem('currentCity') && JSON.parse(localStorage.getItem('currentCity') ?? '')
-  if (currentCity) return Promise.resolve(currentCity)
+  if (currentCity) return await Promise.resolve(currentCity)
 
   // 通过百度地图api获取当前地址
   const localCity = new BMapGL.LocalCity()
@@ -17,4 +17,8 @@ export async function getCurrentCity () {
     localStorage.setItem('currentCity', JSON.stringify(data))
     return data
   }
+}
+
+export function getImageUrl (name: string) {
+  return new URL(`../assets/images/${name}`, import.meta.url).href
 }

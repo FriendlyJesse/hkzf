@@ -4,8 +4,6 @@ import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { getImageUrl } from '@/utils'
 
-const { VITE_APP_BASIC_URL } = import.meta.env
-
 // 菜单
 const menus = [
   { id: 1, name: '我的收藏', iconfont: 'icon-coll', to: '/favorite' },
@@ -72,7 +70,7 @@ function Mine () {
       <div className={styles.title}>
         <img
           className={styles.bg}
-          src={VITE_APP_BASIC_URL + '/img/profile/bg.png'}
+          src={getImageUrl('bg.png')}
           alt="背景图"
         />
         <div className={styles.info}>

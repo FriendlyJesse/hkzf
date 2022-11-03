@@ -1,24 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useLoaderData } from 'react-router-dom'
 import { List, ErrorBlock } from 'antd-mobile'
 import NavHeader from '@/components/NavHeader'
 import HouseItem from '@/components/HouseItem'
-import { getHouses } from '@/apis/user'
 
 const { VITE_APP_BASIC_URL } = import.meta.env
 
 function Rent () {
-  const [houses, setHouses] = useState([])
-
-  async function getHousesData () {
-    const { code, data } = await getHouses()
-    if (code === 200) {
-      console.log(data)
-    }
-  }
-
-  useEffect(() => {
-    void getHousesData()
-  }, [])
+  const houses: any = useLoaderData()
 
   return (
     <div>

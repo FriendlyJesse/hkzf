@@ -8,7 +8,7 @@ const { VITE_APP_BASIC_URL } = import.meta.env
 const DEFAULT_AVATAR = VITE_APP_BASIC_URL + '/img/profile/avatar.png'
 // 菜单
 const menus = [
-  { id: 1, name: '我的收藏', iconfont: 'icon-coll', to: '/favorate' },
+  { id: 1, name: '我的收藏', iconfont: 'icon-coll', to: '/favorite' },
   { id: 2, name: '我的出租', iconfont: 'icon-ind', to: '/rent' },
   { id: 3, name: '看房记录', iconfont: 'icon-record' },
   {

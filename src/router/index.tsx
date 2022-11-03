@@ -14,7 +14,7 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 
 // api
-import { getUser } from '@/apis/user'
+import { getUser, getHouses } from '@/apis/user'
 
 // 鉴权
 async function auth ({ request }: LoaderFunctionArgs) {
@@ -75,6 +75,10 @@ const router = createBrowserRouter([
     path: 'rent',
     async loader (e) {
       await auth(e)
+      const { code, data } = await getHouses()
+      if (code === 200) {
+        return data
+      }
     },
     element: <Rent />
   },

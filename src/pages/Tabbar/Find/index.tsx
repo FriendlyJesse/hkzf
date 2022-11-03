@@ -136,7 +136,6 @@ function RenderList () {
     })
     if (code === 200) {
       i += 21
-      console.log(i)
       setHouses([...houses, ...data.list])
       setHasMore(houses.length <= data.count)
     }
@@ -156,7 +155,7 @@ function RenderList () {
     <PullToRefresh onRefresh={handleRefresh}>
       <List>
         {
-          houses.length ? houses.map((item: any) => (
+          houses.map((item: any) => (
             <List.Item key={item.houseCode}>
               <HouseItem
                 src={import.meta.env.VITE_APP_BASIC_URL + item.houseImg}
@@ -167,7 +166,6 @@ function RenderList () {
               />
             </List.Item>
           ))
-            : <div style={{ marginBottom: '150px' }}><ErrorBlock status='empty' /></div>
         }
       </List>
       <InfiniteScroll loadMore={getHousesData} hasMore={hasMore} />

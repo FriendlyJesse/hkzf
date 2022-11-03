@@ -7,3 +7,4 @@ export interface loginParams {
 
 export const getHouses = () => http.get('/user/houses')
 export const login = (data: loginParams) => http.post('/user/login', data)
+export const getUser = () => http.get('/user')

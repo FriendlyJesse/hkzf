@@ -27,6 +27,29 @@
 .auth {
   margin-bottom: 30px;
 }
+.auth span {
+  border-radius: 30px;
+  color: #fff;
+  padding: 2px 15px;
+  background: #21b97a;
+  font-size: 12px;
+}
+.edit {
+  color: #999;
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+.arrow {
+  transform: rotate(-90deg);
+  display: inline-block;
+  margin-left: 3px;
+}
+
+.arrow .icon-arrow {
+  font-size: 12px;
+  vertical-align: middle;
+}
 
 .user {
   padding-top: 15px;

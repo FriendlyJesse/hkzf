@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { Button, Grid } from 'antd-mobile'
 import styles from './index.module.scss'
+import { getUser } from '@/apis/user'
+import { useEffect, useState } from 'react'
 
 const { VITE_APP_BASIC_URL } = import.meta.env
 // 默认头像
@@ -41,7 +43,34 @@ function RenderGrid () {
 }
 
 function Mine () {
+  // 登录状态
+  const [isLogin, setIsLogin] = useState(false)
+  // 用户信息
+  const [userInfo, setUserInfo] = useState<any>({})
+  const { nickname, avatar } = userInfo
   const navigate = useNavigate()
+
+  // 登出
+  function logout () {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userInfo')
+    setIsLogin(false)
+  }
+
+  // 获取用户数据
+  async function getUserData () {
+    const { code, data } = await getUser()
+    if (code === 200) {
+      setUserInfo(data)
+      setIsLogin(true)
+      localStorage.setItem('userInfo', data)
+    }
+  }
+
+  useEffect(() => {
+    void getUserData()
+  }, [])
+
   return (
     <div>
       <div className={styles.title}>
@@ -54,15 +83,31 @@ function Mine () {
           <div className={styles.myIcon}>
             <img
               className={styles.avatar}
-              src={DEFAULT_AVATAR}
+              src={avatar ?? DEFAULT_AVATAR}
               alt="icon"
             />
           </div>
           <div className={styles.user}>
-            <div className={styles.name}>{'游客'}</div>
-            <div className={styles.edit}>
-              <Button color='primary' size='small' onClick={() => navigate('/login')}>去登录</Button>
-            </div>
+            <div className={styles.name}>{nickname ?? '游客'}</div>
+            {isLogin
+              ? (
+                <>
+                  <div className={styles.auth}>
+                    <span onClick={logout}>退出</span>
+                  </div>
+                  <div className={styles.edit}>
+                    编辑个人资料
+                    <span className={styles.arrow}>
+                      <i className="iconfont icon-arrow" />
+                    </span>
+                  </div>
+                </>
+                )
+              : (
+                <div className={styles.edit}>
+                  <Button color='primary' size='small' onClick={() => navigate('/login')}>去登录</Button>
+                </div>
+                )}
           </div>
         </div>
       </div>

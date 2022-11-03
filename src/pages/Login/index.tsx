@@ -22,7 +22,9 @@ function Login () {
     try {
       const { code, data } = await login(values)
       if (code === 200) {
-        console.log(data)
+        const { token } = data
+        localStorage.setItem('token', token)
+        navigate('/mine')
       }
     } catch {}
     setLoading(false)

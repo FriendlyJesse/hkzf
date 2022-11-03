@@ -13,10 +13,11 @@ function handleError (Error: any) {
   })
 }
 
-// http.interceptors.request.use((res) => {
-
-//   return res
-// })
+http.interceptors.request.use((config: any) => {
+  const token = localStorage.getItem('token') ?? ''
+  token && (config.headers.Authorization = `${token}`)
+  return config
+})
 
 http.interceptors.response.use((res) => {
   const { status, description, body } = res.data

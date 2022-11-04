@@ -2,6 +2,56 @@
   padding-bottom: 50px;
   background-color: #f6f5f6;
 }
+
+/* 房屋基础信息 */
+.info {
+  padding: 15px;
+  background: #fff;
+}
+
+.infoTitle {
+  font-weight: normal;
+  font-size: 16px;
+  color: #333;
+}
+
+.tags {
+  position: relative;
+  margin: 10px 0;
+}
+
+.infoPrice {
+  border-top: solid 1px #cecece;
+  border-bottom: solid 1px #cecece;
+  margin: 15px 0;
+  padding: 15px 0;
+}
+
+.infoPriceItem {
+  text-align: center;
+  color: #999;
+}
+
+.infoPriceItem :global(div) {
+  height: 26px;
+  line-height: 26px;
+}
+
+.infoPriceItem :global(div:first-child) {
+  color: #fa5741;
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.month {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.infoBasic {
+  font-size: 13px;
+}
+
 .map {
   margin-top: 10px;
   background: #fff;
@@ -110,20 +160,6 @@
 
 .items :global(div:last-child) {
   border-bottom: 0;
-}
-
-.fixedBottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  border-top: 1px solid #cecece;
-  text-align: center;
-  font-size: 17px;
-  color: #999;
-  background-color: #fff;
 }
 
 .favorite {

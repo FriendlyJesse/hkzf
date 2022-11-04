@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Swiper, Image, Grid } from 'antd-mobile'
+import { Swiper, Image, Grid, Tag } from 'antd-mobile'
 import { useLoaderData } from 'react-router-dom'
 
 import NavHeader from '@/components/NavHeader'
@@ -10,6 +10,7 @@ import styles from './index.module.scss'
 import './index.scss'
 
 import { getImageUrl } from '@/utils'
+import { GridItem } from 'antd-mobile/es/components/grid/grid'
 
 const labelStyle = {
   position: 'absolute',
@@ -76,6 +77,24 @@ function Detail () {
   const [opacity, setOpacity] = useState(0)
   const details: any = useLoaderData()
 
+  // 渲染标签
+  function RenderTags ({ tags }: { tags: string[] }) {
+    const colors = ['#39becd', '#3fc28c', '#5aabfd']
+
+    return (
+      <div className={styles.tags}>
+        <Grid columns={6} gap={8}>
+          {
+            tags.map((item: string, index) => (
+              <Grid.Item key={item}>
+                <Tag color={index <= 3 ? colors[index] : colors[colors.length - 1]}>{ item }</Tag>
+              </Grid.Item>
+            ))
+          }
+        </Grid>
+      </div>
+    )
+  }
   // 渲染地图
   function renderMap (community: string, coord: { latitude: number, longitude: number }) {
     const { latitude, longitude } = coord
@@ -117,6 +136,76 @@ function Detail () {
         <NavHeader title={details.community} style={{ backgroundColor: `rgba(255, 255, 255, ${opacity})` }} right={<i key="share" className="iconfont icon-share" />} />
       </div>
       <RenderSwiper houseImg={details.houseImg} />
+
+      {/* 房屋基础信息 */}
+      <div className={styles.info}>
+        <h3 className={styles.infoTitle}>{details.title}</h3>
+
+        <RenderTags tags={details.tags} />
+
+        <Grid columns={3} gap={8} className={styles.infoPrice}>
+          <Grid.Item className={styles.infoPriceItem}>
+            <div>
+              {details.price}
+              <span className={styles.month}>/月</span>
+            </div>
+            <div>租金</div>
+          </Grid.Item>
+          <Grid.Item className={styles.infoPriceItem}>
+            <div>{details.roomType}</div>
+            <div>房型</div>
+          </Grid.Item>
+          <Grid.Item className={styles.infoPriceItem}>
+            <div>{details.size}平米</div>
+            <div>面积</div>
+          </Grid.Item>
+        </Grid>
+
+        <Grid columns={2} gap={8} className={styles.infoBasic}>
+          <Grid.Item>
+            <div>
+              <span className={styles.title}>装修：</span>
+              精装
+            </div>
+            <div>
+              <span className={styles.title}>楼层：</span>
+              {details.floor}
+            </div>
+          </Grid.Item>
+          <Grid.Item>
+            <div>
+              <span className={styles.title}>朝向：</span>
+              {details.oriented.join('、')}
+            </div>
+            <div>
+              <span className={styles.title}>类型：</span>普通住宅
+            </div>
+          </Grid.Item>
+        </Grid>
+        {/*
+
+        <Flex className={styles.infoBasic} align="start">
+          <Flex.Item>
+            <div>
+              <span className={styles.title}>装修：</span>
+              精装
+            </div>
+            <div>
+              <span className={styles.title}>楼层：</span>
+              {floor}
+            </div>
+          </Flex.Item>
+          <Flex.Item>
+            <div>
+              <span className={styles.title}>朝向：</span>
+              {oriented.join('、')}
+            </div>
+            <div>
+              <span className={styles.title}>类型：</span>普通住宅
+            </div>
+          </Flex.Item>
+        </Flex> */}
+      </div>
 
       {/* 地图位置 */}
       <div className={styles.map}>
@@ -179,7 +268,7 @@ function Detail () {
       </div>
 
       {/* 底部收藏按钮 */}
-      <div className={styles.fixedBottom}>
+      <div className='fixedBottom'>
         <Grid columns={3} gap={8}>
           <Grid.Item>
             <img

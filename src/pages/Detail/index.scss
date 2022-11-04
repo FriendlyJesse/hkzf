@@ -11,6 +11,14 @@
       font-size: 24px;
     }
   }
+  &.active {
+    .navgation {
+      color: var(--adm-color-text);
+      .adm-nav-bar {
+        --border-bottom: 1px solid var(--adm-color-border);
+      }
+    }
+  }
 }
 
 .adm-grid .adm-grid-item:first-child {

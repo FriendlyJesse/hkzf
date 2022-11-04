@@ -4,6 +4,6 @@
   z-index: 999;
   background: white;
   .adm-nav-bar {
-    --border-bottom: 1px #eee solid;
+    --border-bottom: 1px solid var(--adm-color-border);
   }
 }

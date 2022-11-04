@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Swiper, Image, Grid } from 'antd-mobile'
 import { useLoaderData } from 'react-router-dom'
 
@@ -73,6 +73,7 @@ function RenderSwiper ({ houseImg }: { houseImg: string[] }) {
 }
 
 function Detail () {
+  const [opacity, setOpacity] = useState(0)
   const details: any = useLoaderData()
 
   // 渲染地图
@@ -97,13 +98,23 @@ function Detail () {
   }
 
   useEffect(() => {
+    function handleScrollChange () {
+      const scrollTop = document.documentElement.scrollTop
+      const opacity = Math.floor(((scrollTop / 280) * 10)) / 10
+      setOpacity(opacity)
+    }
+    window.addEventListener('scroll', handleScrollChange)
     renderMap(details.community, details.coord)
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollChange)
+    }
   }, [])
 
   return (
     <div className={styles.root}>
-      <div className='nav'>
-        <NavHeader title={details.community} right={<i key="share" className="iconfont icon-share" />} />
+      <div className={(opacity <= 0.5 ? 'nav' : ['nav', 'active'].join(' '))}>
+        <NavHeader title={details.community} style={{ backgroundColor: `rgba(255, 255, 255, ${opacity})` }} right={<i key="share" className="iconfont icon-share" />} />
       </div>
       <RenderSwiper houseImg={details.houseImg} />
 

@@ -1,3 +1,7 @@
+.root {
+  padding-bottom: 50px;
+  background-color: #f6f5f6;
+}
 .map {
   margin-top: 10px;
   background: #fff;
@@ -128,15 +132,6 @@
 
 .favoriteImg {
   width: 16px;
-}
-
-.fixedBottom div:first-child {
-  border-right: solid 1px #e8e8e9;
-}
-
-.fixedBottom div:last-child {
-  border-right: solid 1px #e8e8e9;
-  background-color: #21b97a;
 }
 
 .telephone {

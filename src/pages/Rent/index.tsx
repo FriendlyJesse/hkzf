@@ -18,6 +18,7 @@ function Rent () {
             ? houses.map((item: any) => (
             <List.Item key={item.houseCode} onClick={() => navigate(`/Detail/${item.houseCode}`)}>
               <HouseItem
+                id={item.houseCode}
                 src={VITE_APP_BASIC_URL + (item.houseImg as string)}
                 title={item.title}
                 desc={item.desc}

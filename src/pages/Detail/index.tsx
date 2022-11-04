@@ -1,6 +1,6 @@
-import { Swiper, Image } from 'antd-mobile'
-import { useLoaderData } from 'react-router-dom'
 import { useEffect } from 'react'
+import { Swiper, Image, Grid } from 'antd-mobile'
+import { useLoaderData } from 'react-router-dom'
 
 import NavHeader from '@/components/NavHeader'
 import HousePackage from '@/components/HousePackage'
@@ -101,7 +101,7 @@ function Detail () {
   }, [])
 
   return (
-    <div>
+    <div className={styles.root}>
       <div className='nav'>
         <NavHeader title={details.community} right={<i key="share" className="iconfont icon-share" />} />
       </div>
@@ -165,6 +165,30 @@ function Detail () {
             <HouseItem {...item} key={item.id} />
           ))}
         </div>
+      </div>
+
+      {/* 底部收藏按钮 */}
+      <div className={styles.fixedBottom}>
+        <Grid columns={3} gap={8}>
+          <Grid.Item>
+            <img
+              src={
+                VITE_APP_BASIC_URL + (details.isFavorite ? '/img/star.png' : '/img/unstar.png')
+              }
+              className={styles.favoriteImg}
+              alt="收藏"
+            />
+            <span className={styles.favorite}>
+              {details.isFavorite ? '已收藏' : '收藏'}
+            </span>
+          </Grid.Item>
+          <Grid.Item>在线咨询</Grid.Item>
+          <Grid.Item>
+            <a href="tel:400-618-4000" className={styles.telephone}>
+              电话预约
+            </a>
+          </Grid.Item>
+        </Grid>
       </div>
     </div>
   )

@@ -12,3 +12,12 @@
     }
   }
 }
+
+.adm-grid .adm-grid-item:first-child {
+  border-right: solid 1px #e8e8e9;
+}
+
+.adm-grid .adm-grid-item:last-child {
+  border-right: solid 1px #e8e8e9;
+  background-color: #21b97a;
+}

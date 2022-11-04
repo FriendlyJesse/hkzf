@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom'
+import { useNavigate, useLoaderData } from 'react-router-dom'
 import { List, ErrorBlock } from 'antd-mobile'
 import NavHeader from '@/components/NavHeader'
 import HouseItem from '@/components/HouseItem'
@@ -6,6 +6,7 @@ import HouseItem from '@/components/HouseItem'
 const { VITE_APP_BASIC_URL } = import.meta.env
 
 function Rent () {
+  const navigate = useNavigate()
   const houses: any = useLoaderData()
 
   return (
@@ -15,7 +16,7 @@ function Rent () {
         {
           (houses.length > 0)
             ? houses.map((item: any) => (
-            <List.Item key={item.houseCode}>
+            <List.Item key={item.houseCode} onClick={() => navigate(`/Detail/${item.houseCode}`)}>
               <HouseItem
                 src={VITE_APP_BASIC_URL + (item.houseImg as string)}
                 title={item.title}

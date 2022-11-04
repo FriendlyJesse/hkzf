@@ -1,0 +1,14 @@
+.nav {
+  .navgation {
+    position: fixed;
+    width: 100%;
+    background: none;
+    color: white;
+    .adm-nav-bar {
+      --border-bottom: none;
+    }
+    .icon-share {
+      font-size: 24px;
+    }
+  }
+}

@@ -7,17 +7,19 @@ import News from '@/pages/Tabbar/News'
 import Find from '@/pages/Tabbar/Find'
 import Mine from '@/pages/Tabbar/Mine'
 
+import Login from '@/pages/Login'
+import Register from '@/pages/Register'
 import Map from '@/pages/Map'
 import CityList from '@/pages/CityList'
 import Rent from '@/pages/Rent'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
+import Detail from '@/pages/Detail'
 
 // api
 import { getUser, getHouses } from '@/apis/user'
+import { getHouse } from '@/apis/houses'
 
 // 鉴权
-async function auth ({ request }: LoaderFunctionArgs) {
+async function auth (e?: LoaderFunctionArgs) {
   const token = localStorage.getItem('token')
   if (!token) {
     await Dialog.alert({
@@ -81,6 +83,18 @@ const router = createBrowserRouter([
       }
     },
     element: <Rent />
+  },
+  {
+    path: 'Detail/:id',
+    async loader ({ params }) {
+      await auth()
+      const { id } = params
+      const { code, data } = await getHouse(id as string)
+      if (code === 200) {
+        return data
+      }
+    },
+    element: <Detail />
   },
   {
     path: 'login',

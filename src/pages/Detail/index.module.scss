@@ -1,0 +1,59 @@
+.map {
+  margin-top: 10px;
+  background: #fff;
+}
+
+.mapTitle {
+  margin: 0 3%;
+  line-height: 44px;
+  color: #666;
+}
+
+.mapTitle :global(span) {
+  color: #333;
+}
+
+.mapContainer {
+  height: 145px;
+  text-align: center;
+}
+
+.mapArrow {
+  background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png)
+    no-repeat;
+  position: absolute;
+  width: 11px;
+  height: 10px;
+  top: 23px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.houseTitle {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 10px;
+  padding: 15px 0;
+  border-bottom: solid 1px #cecece;
+}
+
+.about {
+  margin-bottom: 10px;
+  padding: 0 10px;
+  background: #fff;
+}
+
+.set {
+  margin: 10px 0px;
+  padding: 0 10px;
+  line-height: 150%;
+  background: #fff;
+}
+
+.titleEmpty {
+  padding: 10px 0;
+}
+
+.contact {
+  position: relative;
+}

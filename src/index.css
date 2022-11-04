@@ -14,8 +14,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, p {
+h1, h2, h3, h4, p, ul {
   margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
 }
 
 :root:root {

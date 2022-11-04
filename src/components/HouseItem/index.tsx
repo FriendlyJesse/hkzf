@@ -1,16 +1,17 @@
 import styles from './index.module.scss'
 
 interface Props {
-  src: string,
-  title: string,
-  desc: string,
-  tags: string[],
-  price: string,
-  onClick?: () => void,
+  id: number
+  src: string
+  title: string
+  desc: string
+  tags: string[]
+  price: number
+  onClick?: () => void
   style?: Object
 }
 
-function HouseItem({ src, title, desc, tags, price, onClick, style }: Props) {
+function HouseItem ({ src, title, desc, tags, price, onClick, style }: Props) {
   return (
     <div className={styles.house} onClick={onClick} style={style}>
       <div className={styles.imgWrap}>
@@ -22,7 +23,7 @@ function HouseItem({ src, title, desc, tags, price, onClick, style }: Props) {
         <div>
           {/* ['近地铁', '随时看房'] */}
           {tags.map((tag, index) => {
-            const tagClass = 'tag' + (index + 1)
+            const tagClass = 'tag' + String(index + 1)
             return (
               <span
                 className={[styles.tag, styles[tagClass]].join(' ')}

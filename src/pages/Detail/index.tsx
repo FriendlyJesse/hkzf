@@ -1,10 +1,15 @@
 import { Swiper, Image } from 'antd-mobile'
 import { useLoaderData } from 'react-router-dom'
+import { useEffect } from 'react'
+
 import NavHeader from '@/components/NavHeader'
 import HousePackage from '@/components/HousePackage'
+import HouseItem from '@/components/HouseItem'
+
 import styles from './index.module.scss'
 import './index.scss'
-import { useEffect } from 'react'
+
+import { getImageUrl } from '@/utils'
 
 const labelStyle = {
   position: 'absolute',
@@ -20,6 +25,35 @@ const labelStyle = {
   fontSize: 12,
   userSelect: 'none'
 }
+
+// 猜你喜欢
+const { VITE_APP_BASIC_URL } = import.meta.env
+const recommendHouses = [
+  {
+    id: 1,
+    src: VITE_APP_BASIC_URL + '/img/message/1.png',
+    desc: '72.32㎡/南 北/低楼层',
+    title: '安贞西里 3室1厅',
+    price: 4500,
+    tags: ['随时看房']
+  },
+  {
+    id: 2,
+    src: VITE_APP_BASIC_URL + '/img/message/2.png',
+    desc: '83㎡/南/高楼层',
+    title: '天居园 2室1厅',
+    price: 7200,
+    tags: ['近地铁']
+  },
+  {
+    id: 3,
+    src: VITE_APP_BASIC_URL + '/img/message/3.png',
+    desc: '52㎡/西南/低楼层',
+    title: '角门甲4号院 1室1厅',
+    price: 4300,
+    tags: ['集中供暖']
+  }
+]
 
 function RenderSwiper ({ houseImg }: { houseImg: string[] }) {
   return (
@@ -86,18 +120,52 @@ function Detail () {
 
       {/* 房屋配套 */}
       <div className={styles.about}>
-          <div className={styles.houseTitle}>房屋配套</div>
-          {/* <HousePackage list={supporting} /> */}
-          {/* <div className="title-empty">暂无数据</div> */}
+        <div className={styles.houseTitle}>房屋配套</div>
+        {/* <HousePackage list={supporting} /> */}
+        {/* <div className="title-empty">暂无数据</div> */}
 
-          {details.supporting.length === 0
-            ? (
-            <div className={styles.titleEmpty}>暂无数据</div>
-              )
-            : (
-            <HousePackage list={details.supporting} />
-              )}
+        {details.supporting.length === 0
+          ? (
+          <div className={styles.titleEmpty}>暂无数据</div>
+            )
+          : (
+          <HousePackage list={details.supporting} />
+            )}
+      </div>
+
+      {/* 房屋概况 */}
+      <div className={styles.set}>
+        <div className={styles.houseTitle}>房源概况</div>
+        <div>
+          <div className={styles.contact}>
+            <div className={styles.user}>
+              <img src={getImageUrl('avatar.png')} alt="头像" />
+              <div className={styles.useInfo}>
+                <div>王女士</div>
+                <div className={styles.userAuth}>
+                  <i className="iconfont icon-auth" />
+                  已认证房主
+                </div>
+              </div>
+            </div>
+            <span className={styles.userMsg}>发消息</span>
+          </div>
+
+          <div className={styles.descText}>
+            {details.description || '暂无房屋描述'}
+          </div>
         </div>
+      </div>
+
+      {/* 推荐 */}
+      <div className={styles.recommend}>
+        <div className={styles.houseTitle}>猜你喜欢</div>
+        <div className={styles.items}>
+          {recommendHouses.map(item => (
+            <HouseItem {...item} key={item.id} />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

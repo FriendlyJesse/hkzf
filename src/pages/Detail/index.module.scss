@@ -57,3 +57,88 @@
 .contact {
   position: relative;
 }
+
+.user {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.user img {
+  width: 52px;
+  height: 52px;
+  margin: 10px 10px 0 0;
+}
+
+.useInfo {
+  padding: 15px 0 0 5px;
+}
+
+.userAuth {
+  font-size: 12px;
+  color: #fa5741;
+}
+
+.userAuth :global(.icon-auth) {
+  margin-right: 5px;
+}
+
+.userMsg {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  color: #33be85;
+  border: solid 1px #33be85;
+  border-radius: 3px;
+  padding: 3px 15px;
+}
+
+.descText {
+  line-height: 1.6;
+  padding: 10px 0;
+  color: #333;
+}
+
+.recommend {
+  margin: 10px 0 0 0;
+  padding: 0 15px;
+  background: #fff;
+}
+
+.items :global(div:last-child) {
+  border-bottom: 0;
+}
+
+.fixedBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px solid #cecece;
+  text-align: center;
+  font-size: 17px;
+  color: #999;
+  background-color: #fff;
+}
+
+.favorite {
+  margin-left: 6px;
+}
+
+.favoriteImg {
+  width: 16px;
+}
+
+.fixedBottom div:first-child {
+  border-right: solid 1px #e8e8e9;
+}
+
+.fixedBottom div:last-child {
+  border-right: solid 1px #e8e8e9;
+  background-color: #21b97a;
+}
+
+.telephone {
+  color: #fff;
+}

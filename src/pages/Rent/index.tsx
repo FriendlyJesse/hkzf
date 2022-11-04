@@ -7,7 +7,7 @@ const { VITE_APP_BASIC_URL } = import.meta.env
 
 function Rent () {
   const navigate = useNavigate()
-  const houses: any = useLoaderData()
+  const houses: any = useLoaderData() ?? []
 
   return (
     <div>

@@ -87,7 +87,6 @@ const router = createBrowserRouter([
   {
     path: 'Detail/:id',
     async loader ({ params }) {
-      await auth()
       const { id } = params
       const { code, data } = await getHouse(id as string)
       if (code === 200) {

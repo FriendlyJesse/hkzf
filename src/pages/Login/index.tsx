@@ -6,8 +6,12 @@ import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 import NavHeader from '@/components/NavHeader'
 import styles from './index.module.scss'
 import { login, loginParams } from '@/apis/user'
+// redux
+import { useDispatch } from 'react-redux'
+import { setToken } from '@/store/features/user'
 
 function Login () {
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -23,6 +27,7 @@ function Login () {
       const { code, data } = await login(values)
       if (code === 200) {
         const { token } = data
+        dispatch(setToken(token))
         localStorage.setItem('token', token)
         navigate('/mine')
       }

@@ -3,6 +3,10 @@ import { Button, Grid, Dialog, Toast } from 'antd-mobile'
 import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
 import { getImageUrl } from '@/utils'
+// redux
+import type { RootState } from '@/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { login } from '@/store/features/user'
 
 // 菜单
 const menus = [
@@ -40,6 +44,8 @@ function RenderGrid () {
 }
 
 function Mine () {
+  const user = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   // 登录状态
   const [isLogin, setIsLogin] = useState(false)

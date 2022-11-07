@@ -10,7 +10,6 @@ import styles from './index.module.scss'
 import './index.scss'
 
 import { getImageUrl } from '@/utils'
-import { GridItem } from 'antd-mobile/es/components/grid/grid'
 
 const labelStyle = {
   position: 'absolute',
@@ -182,29 +181,6 @@ function Detail () {
             </div>
           </Grid.Item>
         </Grid>
-        {/*
-
-        <Flex className={styles.infoBasic} align="start">
-          <Flex.Item>
-            <div>
-              <span className={styles.title}>装修：</span>
-              精装
-            </div>
-            <div>
-              <span className={styles.title}>楼层：</span>
-              {floor}
-            </div>
-          </Flex.Item>
-          <Flex.Item>
-            <div>
-              <span className={styles.title}>朝向：</span>
-              {oriented.join('、')}
-            </div>
-            <div>
-              <span className={styles.title}>类型：</span>普通住宅
-            </div>
-          </Flex.Item>
-        </Flex> */}
       </div>
 
       {/* 地图位置 */}
@@ -272,9 +248,7 @@ function Detail () {
         <Grid columns={3} gap={8}>
           <Grid.Item>
             <img
-              src={
-                VITE_APP_BASIC_URL + (details.isFavorite ? '/img/star.png' : '/img/unstar.png')
-              }
+              src={details.isFavorite ? getImageUrl('star.png') : getImageUrl('unstar.png')}
               className={styles.favoriteImg}
               alt="收藏"
             />

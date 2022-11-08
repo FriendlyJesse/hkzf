@@ -55,6 +55,16 @@ function Add () {
           </Button>
         }
       >
+        <Form.Item
+          name='community'
+          label='小区名称'
+          required={true}
+          onClick={e => {
+            console.log(e)
+          }}
+        >
+          <Input placeholder='请选择小区名称' readOnly />
+        </Form.Item>
         <Form.Item name='price' label='租金' extra={'￥/月'} rules={[{ required: true }]}>
           <Input placeholder='请输入租金/月' />
         </Form.Item>

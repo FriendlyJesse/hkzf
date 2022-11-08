@@ -1,6 +1,14 @@
 import { createBrowserRouter, Navigate, redirect, LoaderFunctionArgs } from 'react-router-dom'
 import { Dialog } from 'antd-mobile'
 
+// redux
+import { store } from '@/store'
+
+// api
+import { getUser, getHouses } from '@/apis/user'
+import { getHouse } from '@/apis/houses'
+
+// routes
 import Tabbar from '@/pages/Tabbar'
 import Index from '@/pages/Tabbar/Index/index'
 import News from '@/pages/Tabbar/News'
@@ -13,10 +21,6 @@ import Map from '@/pages/Map'
 import CityList from '@/pages/CityList'
 import Rent from '@/pages/Rent'
 import Detail from '@/pages/Detail'
-
-// api
-import { getUser, getHouses } from '@/apis/user'
-import { getHouse } from '@/apis/houses'
 
 // 鉴权
 async function auth (e?: LoaderFunctionArgs) {
@@ -57,7 +61,10 @@ const router = createBrowserRouter([
         async loader () {
           const { code, data } = await getUser()
           if (code === 200) {
-            localStorage.setItem('userInfo', JSON.stringify(data))
+            store.dispatch({
+              type: 'user/setUserInfo',
+              payload: data
+            })
             return data
           }
         },

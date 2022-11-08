@@ -3,30 +3,36 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface userState {
   token: string
-  userInfo: Object | null
+  userInfo: {
+    [key: string]: string
+  }
+  isLoggedIn: Boolean
 }
 
 const initialState: userState = {
   token: '',
-  userInfo: {}
+  userInfo: {},
+  isLoggedIn: false
 }
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // login (state, { payload: { token, userInfo } }: PayloadAction<{ token: string, userInfo: Object }>) {
-    //   state.token = token
-    //   state.userInfo = userInfo
-    // }
     setToken (state, action: PayloadAction<string>) {
       state.token = action.payload
+      state.isLoggedIn = true
     },
-    setUserInfo (state, action: PayloadAction<string>) {
+    setUserInfo (state, action: PayloadAction<{ [key: string]: string }>) {
       state.userInfo = action.payload
+    },
+    logout (state) {
+      state.token = ''
+      state.userInfo = {}
+      state.isLoggedIn = false
     }
   }
 })
 
-export const { setToken, setUserInfo } = userSlice.actions
+export const { setToken, setUserInfo, logout } = userSlice.actions
 export default userSlice.reducer

@@ -28,7 +28,6 @@ function Login () {
       if (code === 200) {
         const { token } = data
         dispatch(setToken(token))
-        localStorage.setItem('token', token)
         navigate('/mine')
       }
     } catch {}

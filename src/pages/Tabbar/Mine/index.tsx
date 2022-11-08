@@ -1,12 +1,11 @@
-import { useNavigate, useLoaderData } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button, Grid, Dialog, Toast } from 'antd-mobile'
 import styles from './index.module.scss'
-import { useEffect, useState } from 'react'
 import { getImageUrl } from '@/utils'
 // redux
 import type { RootState } from '@/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { login } from '@/store/features/user'
+import { logout as triggerLogout } from '@/store/features/user'
 
 // 菜单
 const menus = [
@@ -44,11 +43,9 @@ function RenderGrid () {
 }
 
 function Mine () {
-  const user = useSelector((state: RootState) => state.user)
+  const { isLoggedIn, userInfo: { nickname, avatar } } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // 登录状态
-  const [isLogin, setIsLogin] = useState(false)
 
   // 登出
   async function logout () {
@@ -56,20 +53,10 @@ function Mine () {
       content: '是否确定退出？'
     })
     if (result) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('userInfo')
-      setIsLogin(false)
+      dispatch(triggerLogout())
       Toast.show({ content: '退出成功', position: 'bottom' })
     }
   }
-
-  // 获取用户数据
-  const userInfo: any = useLoaderData()
-  const { nickname, avatar } = userInfo ?? {}
-
-  useEffect(() => {
-    if (userInfo) setIsLogin(true)
-  }, [])
 
   return (
     <div>
@@ -89,7 +76,7 @@ function Mine () {
           </div>
           <div className={styles.user}>
             <div className={styles.name}>{nickname ?? '游客'}</div>
-            {isLogin
+            {isLoggedIn
               ? (
                 <>
                   <div className={styles.auth}>

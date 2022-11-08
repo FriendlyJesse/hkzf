@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
+import { store } from '@/store'
 
 const http = axios.create({
   baseURL: 'http://localhost:8080/'
@@ -14,7 +15,7 @@ function handleError (Error: any) {
 }
 
 http.interceptors.request.use((config: any) => {
-  const token = localStorage.getItem('token') ?? ''
+  const { user: { token } } = store.getState()
   token && (config.headers.Authorization = `${token}`)
   return config
 })

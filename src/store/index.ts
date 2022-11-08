@@ -16,17 +16,11 @@ const persistConfig = {
   key: 'root',
   storage,
   version: 1,
-  whitelist: []
-}
-
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  whitelist: ['token']
+  whitelist: ['user']
 }
 
 const reducers = combineReducers({
-  user: persistReducer(authPersistConfig, user)
+  user
 })
 const persistedReducer = persistReducer(persistConfig, reducers)
 export const store = configureStore({

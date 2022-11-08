@@ -170,23 +170,27 @@ function RenderMap () {
           />
           {!focus && <Avatar src='' className={styles.avatar} />}
         </Space> */}
-        <List header='房屋列表'>
-          {
-            (houses.length > 0)
-              ? houses.map((item: any) => (
-              <List.Item key={item.houseCode}>
-                <HouseItem
-                  src={VITE_APP_BASIC_URL + (item.houseImg as string)}
-                  title={item.title}
-                  desc={item.desc}
-                  tags={item.tags}
-                  price={item.price}
-                />
-              </List.Item>
-              ))
-              : <div style={{ marginBottom: '150px' }}><ErrorBlock status='empty' /></div>
-          }
-        </List>
+        {
+          (houses.length > 0)
+            ? <List header='房屋列表'>
+              {
+                houses.map((item: any) => (
+                  <List.Item key={item.houseCode}>
+                    <HouseItem
+                      id={item.houseCode}
+                      src={VITE_APP_BASIC_URL + (item.houseImg as string)}
+                      title={item.title}
+                      desc={item.desc}
+                      tags={item.tags}
+                      price={item.price}
+                    />
+                  </List.Item>
+                ))
+              }
+            </List>
+            : <ErrorBlock status='empty' fullPage />
+        }
+
       </FloatingPanel>
     )
   }

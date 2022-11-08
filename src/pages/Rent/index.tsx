@@ -1,9 +1,18 @@
 import { useNavigate, useLoaderData } from 'react-router-dom'
-import { List, ErrorBlock } from 'antd-mobile'
+import { List, ErrorBlock, SwipeAction } from 'antd-mobile'
+import { Action } from 'antd-mobile/es/components/swipe-action'
 import NavHeader from '@/components/NavHeader'
 import HouseItem from '@/components/HouseItem'
 
 const { VITE_APP_BASIC_URL } = import.meta.env
+
+const rightActions: Action[] = [
+  {
+    key: 'delete',
+    text: '删除',
+    color: 'danger'
+  }
+]
 
 function Rent () {
   const navigate = useNavigate()
@@ -12,24 +21,32 @@ function Rent () {
   return (
     <div>
       <NavHeader title='我的出租' />
-      <List>
-        {
-          (houses.length > 0)
-            ? houses.map((item: any) => (
-            <List.Item key={item.houseCode} onClick={() => navigate(`/Detail/${item.houseCode}`)}>
-              <HouseItem
-                id={item.houseCode}
-                src={VITE_APP_BASIC_URL + (item.houseImg as string)}
-                title={item.title}
-                desc={item.desc}
-                tags={item.tags}
-                price={item.price}
-              />
-            </List.Item>
+      {
+        (houses.length > 0)
+          ? <List>
+          {
+            houses.map((item: any) => (
+              <SwipeAction
+                key={item}
+                rightActions={rightActions}
+              >
+                <List.Item key={item.houseCode} onClick={() => navigate(`/Detail/${item.houseCode}`)}>
+                  <HouseItem
+                    id={item.houseCode}
+                    src={VITE_APP_BASIC_URL + (item.houseImg as string)}
+                    title={item.title}
+                    desc={item.desc}
+                    tags={item.tags}
+                    price={item.price}
+                  />
+                </List.Item>
+              </SwipeAction>
             ))
-            : <div style={{ marginBottom: '150px' }}><ErrorBlock status='empty' /></div>
-        }
-      </List>
+          }
+        </List>
+          : <ErrorBlock status='empty' fullPage />
+      }
+
     </div>
   )
 }

@@ -1,13 +1,14 @@
 import { createBrowserRouter, Navigate, redirect, LoaderFunctionArgs } from 'react-router-dom'
 import { Dialog } from 'antd-mobile'
+import { getStoredState } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 // redux
 import { store } from '@/store'
 
 // api
-import { getUser, getHouses } from '@/apis/user'
+import { getUser, getHouses, hasFavorite } from '@/apis/user'
 import { getHouse } from '@/apis/houses'
-import { hasFavorite } from '@/apis/user'
 
 // routes
 import Tabbar from '@/pages/Tabbar'
@@ -25,7 +26,11 @@ import Detail from '@/pages/Detail'
 
 // 鉴权
 async function auth (e?: LoaderFunctionArgs) {
-  const { user: { isLoggedIn } } = store.getState()
+  const { user: { isLoggedIn } }: any = await getStoredState({
+    key: 'root',
+    version: 1,
+    storage
+  })
   if (!isLoggedIn) {
     await Dialog.alert({
       content: '当前未登录，正在前往登录...'

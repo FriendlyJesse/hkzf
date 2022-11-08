@@ -7,7 +7,7 @@ function Search () {
   return (
     <div className={styles.root}>
       <div className={styles.search}>
-        <SearchBar placeholder='请输入小区或地址' showCancelButton onCancel={() => navigate(-1)} />
+        <SearchBar placeholder='请输入小区或地址' style={{ '--background': '#ffffff' }} showCancelButton={() => true} onCancel={() => navigate(-1)} />
       </div>
     </div>
   )

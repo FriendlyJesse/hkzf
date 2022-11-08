@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Swiper, Image, Grid, Tag } from 'antd-mobile'
+import { Swiper, Image, Grid, Tag, Toast } from 'antd-mobile'
 import { useLoaderData } from 'react-router-dom'
 
 import NavHeader from '@/components/NavHeader'
@@ -10,6 +10,7 @@ import styles from './index.module.scss'
 import './index.scss'
 
 import { getImageUrl } from '@/utils'
+import { addFavorite, deleteFavorites } from '@/apis/user'
 
 const labelStyle = {
   position: 'absolute',
@@ -74,7 +75,8 @@ function RenderSwiper ({ houseImg }: { houseImg: string[] }) {
 
 function Detail () {
   const [opacity, setOpacity] = useState(0)
-  const details: any = useLoaderData()
+  const [favoriteFlag, setFavoriteFlag] = useState(false)
+  const { data: details, favoriteData }: any = useLoaderData()
 
   // 渲染标签
   function RenderTags ({ tags }: { tags: string[] }) {
@@ -115,7 +117,16 @@ function Detail () {
     map.addOverlay(label)
   }
 
+  async function handleFavoriteClick () {
+    const { code, msg }: any = await (favoriteFlag ? deleteFavorites(details.houseCode) : addFavorite(details.houseCode))
+    if (code === 200) {
+      Toast.show(msg)
+      setFavoriteFlag(!favoriteFlag)
+    }
+  }
+
   useEffect(() => {
+    setFavoriteFlag(favoriteData.isFavorite)
     function handleScrollChange () {
       const scrollTop = document.documentElement.scrollTop
       const opacity = Math.floor(((scrollTop / 280) * 10)) / 10
@@ -246,14 +257,14 @@ function Detail () {
       {/* 底部收藏按钮 */}
       <div className='fixedBottom'>
         <Grid columns={3} gap={8}>
-          <Grid.Item>
+          <Grid.Item onClick={handleFavoriteClick}>
             <img
-              src={details.isFavorite ? getImageUrl('star.png') : getImageUrl('unstar.png')}
+              src={favoriteFlag ? getImageUrl('star.png') : getImageUrl('unstar.png')}
               className={styles.favoriteImg}
               alt="收藏"
             />
             <span className={styles.favorite}>
-              {details.isFavorite ? '已收藏' : '收藏'}
+              {favoriteFlag ? '已收藏' : '收藏'}
             </span>
           </Grid.Item>
           <Grid.Item>在线咨询</Grid.Item>

@@ -7,6 +7,7 @@ import { store } from '@/store'
 // api
 import { getUser, getHouses } from '@/apis/user'
 import { getHouse } from '@/apis/houses'
+import { hasFavorite } from '@/apis/user'
 
 // routes
 import Tabbar from '@/pages/Tabbar'
@@ -24,8 +25,8 @@ import Detail from '@/pages/Detail'
 
 // 鉴权
 async function auth (e?: LoaderFunctionArgs) {
-  const token = localStorage.getItem('token')
-  if (!token) {
+  const { user: { isLoggedIn } } = store.getState()
+  if (!isLoggedIn) {
     await Dialog.alert({
       content: '当前未登录，正在前往登录...'
     })
@@ -65,7 +66,6 @@ const router = createBrowserRouter([
               type: 'user/setUserInfo',
               payload: data
             })
-            return data
           }
         },
         element: <Mine />
@@ -95,9 +95,11 @@ const router = createBrowserRouter([
     path: 'Detail/:id',
     async loader ({ params }) {
       const { id } = params
-      const { code, data } = await getHouse(id as string)
-      if (code === 200) {
-        return data
+      const { data } = await getHouse(id as string)
+      const { data: favoriteData } = await hasFavorite(data.houseCode)
+      return {
+        data,
+        favoriteData
       }
     },
     element: <Detail />

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { SearchBar, Dropdown, CascadePickerView, List, ErrorBlock, InfiniteScroll, PullToRefresh } from 'antd-mobile'
+import { SearchBar, Dropdown, CascadePickerView, List, InfiniteScroll, PullToRefresh } from 'antd-mobile'
 import styles from './index.module.scss'
 import { getConditions, getHouses } from '@/apis/houses'
 import HouseItem from '@/components/HouseItem'
 
 function RenderOptions () {
-
   const [conditions, setConditions] = useState<any>([])
   const [more, setMore] = useState({})
 
@@ -51,7 +50,7 @@ function RenderOptions () {
   // 清除数组中的null
   function valueFormatter (value: any[]) {
     return value.filter(item => {
-      return (item !== null) 
+      return (item !== null)
     })
   }
 
@@ -60,7 +59,7 @@ function RenderOptions () {
     const item = data.find((item: any) => item.value === option[i])
     if (item.value !== 'null') arr.push({ label: item.label, value: item.value })
     if (item.children) return findLabels(item.children, option, arr, ++i)
-    
+
     return arr
   }
 
@@ -98,26 +97,30 @@ function RenderOptions () {
   }
 
   useEffect(() => {
-    getConditionsData()
+    void getConditionsData()
   }, [])
 
   return (
     <Dropdown>
       {
-        conditions.length ? conditions.map((item: any) => {
-          const { label, name, value, options } = item
-          if (label === 'more') return <Dropdown.Item key={label} title={label} />
-          return (
+        conditions.length
+          ? conditions.map((item: any) => {
+            const { label, name, value, options } = item
+            if (label === 'more') return <Dropdown.Item key={label} title={label} />
+            return (
             <Dropdown.Item key={name} title={label} highlight={value}>
               {
-                name !== 'more' ? <CascadePickerView
+                name !== 'more'
+                  ? <CascadePickerView
                   options={options}
                   onChange={(value) => handlePickerChange(value, item)}
-                /> : ''
+                />
+                  : ''
               }
             </Dropdown.Item>
-          )
-        }) : ''
+            )
+          })
+          : ''
       }
     </Dropdown>
   )
@@ -127,7 +130,7 @@ let i = 1
 function RenderList () {
   const [houses, setHouses] = useState<any>([])
   const [hasMore, setHasMore] = useState(true)
-  
+
   async function getHousesData () {
     const { code, data } = await getHouses({
       cityId: 'AREA|88cff55c-aaa4-e2e0',
@@ -135,15 +138,19 @@ function RenderList () {
       end: i + 21
     })
     if (code === 200) {
+      if (i === 1) {
+        setHouses([...data.list])
+      } else {
+        setHouses([...houses, ...data.list])
+      }
       i += 21
-      setHouses([...houses, ...data.list])
       setHasMore(houses.length <= data.count)
     }
   }
 
   async function handleRefresh () {
     i = 1
-    getHousesData()
+    void getHousesData()
   }
 
   useEffect(() => {
@@ -158,7 +165,8 @@ function RenderList () {
           houses.map((item: any) => (
             <List.Item key={item.houseCode}>
               <HouseItem
-                src={import.meta.env.VITE_APP_BASIC_URL + item.houseImg}
+                id={item.houseCode}
+                src={import.meta.env.VITE_APP_BASIC_URL + (item.houseImg as string)}
                 title={item.title}
                 desc={item.desc}
                 tags={item.tags}

@@ -18,6 +18,10 @@ function Rent () {
   const navigate = useNavigate()
   const houses: any = useLoaderData() ?? []
 
+  function toAdd () {
+    navigate('/rent/add')
+  }
+
   return (
     <div>
       <NavHeader title='我的出租' />
@@ -44,7 +48,7 @@ function Rent () {
             ))
           }
         </List>
-          : <ErrorBlock status='empty' fullPage />
+          : <ErrorBlock status='empty' fullPage title={'您还没有发布房源'} description={<div>去<a onClick={toAdd}>发布房源</a>吧~</div>} />
       }
 
     </div>

@@ -57,7 +57,7 @@ const HOUSE_PACKAGE = [
 ]
 
 interface Props {
-  list: string[]
+  list?: string[]
   select?: Boolean
   onSelect?: Function
 }
@@ -115,7 +115,7 @@ class HousePackage extends Component<Props, State> {
     } else {
       // 展示房屋配置列表
       // 从所有的列表项中过滤出要展示的（list）列表项
-      data = HOUSE_PACKAGE.filter(v => list.includes(v.name))
+      data = HOUSE_PACKAGE.filter(v => list?.includes(v.name))
     }
 
     return data.map(item => {

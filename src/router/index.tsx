@@ -22,6 +22,7 @@ import Register from '@/pages/Register'
 import Map from '@/pages/Map'
 import CityList from '@/pages/CityList'
 import Rent from '@/pages/Rent'
+import RentAdd from '@/pages/Rent/Add'
 import Detail from '@/pages/Detail'
 
 // 鉴权
@@ -95,6 +96,13 @@ const router = createBrowserRouter([
       }
     },
     element: <Rent />
+  },
+  {
+    path: 'rent/add',
+    async loader (e) {
+      await auth(e)
+    },
+    element: <RentAdd />
   },
   {
     path: 'Detail/:id',

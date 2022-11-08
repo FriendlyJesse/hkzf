@@ -1,4 +1,5 @@
 import { Form, Button, Input, Picker, ImageUploader, TextArea } from 'antd-mobile'
+import { useNavigate } from 'react-router-dom'
 import NavHeader from '@/components/NavHeader'
 import HousePackge from '@/components/HousePackage'
 // import styles from './index.module.scss'
@@ -38,6 +39,7 @@ const orientedData = [
 ]
 
 function Add () {
+  const navigate = useNavigate()
   function onFinish (values: any) {
     console.log(values)
   }
@@ -59,8 +61,8 @@ function Add () {
           name='community'
           label='小区名称'
           required={true}
-          onClick={e => {
-            console.log(e)
+          onClick={() => {
+            navigate('/rent/search')
           }}
         >
           <Input placeholder='请选择小区名称' readOnly />

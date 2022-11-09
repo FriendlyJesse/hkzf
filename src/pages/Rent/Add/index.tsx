@@ -75,8 +75,10 @@ function Add () {
 
   useEffect(() => {
     const { state } = location
-    form.setFieldValue(['community', 'name'], state.name)
-    form.setFieldValue(['community', 'id'], state.id)
+    if (state) {
+      form.setFieldValue(['community', 'name'], state.name)
+      form.setFieldValue(['community', 'id'], state.id)
+    }
   }, [])
 
   return (

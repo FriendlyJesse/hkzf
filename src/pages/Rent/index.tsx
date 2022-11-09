@@ -24,17 +24,17 @@ function Rent () {
 
   return (
     <div>
-      <NavHeader title='我的出租' />
+      <NavHeader title='我的出租' right={<a onClick={() => navigate('/rent/add')}>去发布</a>} />
       {
         (houses.length > 0)
           ? <List>
           {
             houses.map((item: any) => (
               <SwipeAction
-                key={item}
+                key={item.houseCode}
                 rightActions={rightActions}
               >
-                <List.Item key={item.houseCode} onClick={() => navigate(`/Detail/${item.houseCode}`)}>
+                <List.Item onClick={() => navigate(`/Detail/${item.houseCode}`)}>
                   <HouseItem
                     id={item.houseCode}
                     src={VITE_APP_BASIC_URL + (item.houseImg as string)}

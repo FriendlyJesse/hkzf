@@ -12,4 +12,5 @@ export const addFavorite = (id: number) => http.post(`/user/favorites/${id}`)
 export const deleteFavorites = (id: number) => http.delete(`/user/favorites/${id}`)
 
 export const getHouses = () => http.get('/user/houses')
+export const addHouse = (data: { [key: string]: string | number }) => http.post('/user/houses', data)
 export const getUser = () => http.get('/user')

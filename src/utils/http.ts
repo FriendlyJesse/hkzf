@@ -36,6 +36,20 @@ http.interceptors.response.use((res) => {
   return res.data
 }, handleError)
 
+// 新接口
+const newHttp = axios.create({
+  baseURL: 'http://localhost:7001/'
+})
+newHttp.interceptors.request.use((config: any) => {
+  const { user: { token } } = store.getState()
+  token && (config.headers.Authorization = `${token}`)
+  return config
+})
+newHttp.interceptors.response.use((res) => {
+  return res.data
+}, handleError)
+
 export {
-  http
+  http,
+  newHttp
 }

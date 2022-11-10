@@ -9,16 +9,16 @@ import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
 
+const { VITE_APP_RESOURCE_URL } = import.meta.env
+
 function RenderSwipers () {
   // 获取轮播图数据
   const [swipers, setSwipers] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   async function getSwipersData () {
-    const { code, data } = await getSwipers()
-    if (code === 200) {
-      setSwipers(data)
-      setIsLoaded(true)
-    }
+    const { data } = await getSwipers()
+    setSwipers(data)
+    setIsLoaded(true)
   }
   useEffect(() => {
     void getSwipersData()
@@ -31,7 +31,7 @@ function RenderSwipers () {
         swipers.map((item: any, index) => (
           <Swiper.Item key={item.id}>
             <Image
-              src={'http://localhost:8080' + (item.imgSrc as string)}
+              src={VITE_APP_RESOURCE_URL + (item.img as string)}
               width='100%'
               onClick={() => {
                 Toast.show(`你点击了卡片 ${index + 1}`)

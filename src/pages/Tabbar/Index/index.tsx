@@ -99,10 +99,8 @@ function RenderGroups () {
   // 获取租房小组数据
   const [group, setGroups] = useState([])
   async function getGroupsData () {
-    const { code, data } = await getGroups({ area: 'AREA|88cff55c-aaa4-e2e0' })
-    if (code === 200) {
-      setGroups(data)
-    }
+    const { data } = await getGroups()
+    setGroups(data)
   }
   useEffect(() => {
     void getGroupsData()
@@ -113,9 +111,9 @@ function RenderGroups () {
       <div className={styles.group_item}>
         <div className={styles.group_desc}>
           <p className={styles.desc_title}>{item.title}</p>
-          <span className={styles.desc_info}>{item.desc}</span>
+          <span className={styles.desc_info}>{item.description}</span>
         </div>
-        <Image src={'http://localhost:8080' + (item.imgSrc as string)} width={55} />
+        <Image src={VITE_APP_RESOURCE_URL + (item.img as string)} width={55} />
       </div>
     </Grid.Item>)
   )

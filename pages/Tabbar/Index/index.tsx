@@ -9,6 +9,7 @@ import nav2 from '@/assets/images/nav-2.png'
 import nav3 from '@/assets/images/nav-3.png'
 import nav4 from '@/assets/images/nav-4.png'
 
+import { VITE_APP_RESOURCE_URL } from import.meta.env
 
 function RenderSwipers () {
   // 获取轮播图数据
@@ -32,7 +33,7 @@ function RenderSwipers () {
         swipers.map((item: any, index) => (
           <Swiper.Item key={item.id}>
             <Image 
-              src={'http://localhost:8080' + item.imgSrc}
+              src={'http://localhost:8080' + item.img}
               width='100%'
               onClick={() => {
                 Toast.show(`你点击了卡片 ${index + 1}`)
@@ -101,7 +102,7 @@ function RenderGroups () {
   // 获取租房小组数据
   const [group, setGroups] = useState([])
   async function getGroupsData () {
-    const { code, data } = await getGroups({ area: 'AREA|88cff55c-aaa4-e2e0' })
+    const { code, data } = await getGroups()
     if (code === 200) {
       setGroups(data)
     }
@@ -117,7 +118,7 @@ function RenderGroups () {
           <p className={styles.desc_title}>{item.title}</p>
           <span className={styles.desc_info}>{item.desc}</span>
         </div>
-        <Image src={'http://localhost:8080' + item.imgSrc} width={55} />
+        <Image src={ + item.imgSrc} width={55} />
       </div>
     </Grid.Item>)
   )

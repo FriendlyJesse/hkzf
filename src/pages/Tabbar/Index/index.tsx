@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Swiper, Toast, Image, Grid } from 'antd-mobile'
 import SearchHeader from '@/components/SearchHeader'
 import { getSwipers, getGroups, getNews } from '@/apis'
-import { getCurrentCity } from '@/utils'
+import { getCurrentCity, getDataFromNow } from '@/utils'
 import styles from './index.module.css'
 import nav1 from '@/assets/images/nav-1.png'
 import nav2 from '@/assets/images/nav-2.png'
@@ -122,10 +122,8 @@ function RenderNews () {
   // 获取资讯数据
   const [news, setNews] = useState([])
   async function getNewsData () {
-    const { code, data } = await getNews({ area: 'AREA|88cff55c-aaa4-e2e0' })
-    if (code === 200) {
-      setNews(data)
-    }
+    const { data } = await getNews()
+    setNews(data)
   }
   useEffect(() => {
     void getNewsData()
@@ -134,13 +132,13 @@ function RenderNews () {
     news.map((item: any) => (
       <div className={styles.news_item} key={item.id}>
         <div className={styles.imgwrap}>
-          <Image src={`http://localhost:8080${(item.imgSrc as string)}`} width={120} height={90} />
+          <Image src={VITE_APP_RESOURCE_URL + (item.img as string)} width={120} height={90} />
         </div>
         <div className={styles.news_content}>
           <h3 className={styles.news_title}>{item.title}</h3>
           <div className={styles.news_info}>
             <span>{item.from}</span>
-            <span>{item.date}</span>
+            <span>{getDataFromNow(item.createdDate)}</span>
           </div>
         </div>
       </div>

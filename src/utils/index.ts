@@ -1,4 +1,9 @@
 import { getAreaInfo } from '@/apis/area'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import AdvancedFormat from 'dayjs/plugin/relativeTime'
+dayjs.locale('zh-cn')
+dayjs.extend(AdvancedFormat)
 
 export async function getCurrentCity () {
   const currentCity = localStorage.getItem('currentCity') && JSON.parse(localStorage.getItem('currentCity') ?? '')
@@ -21,4 +26,8 @@ export async function getCurrentCity () {
 
 export function getImageUrl (name: string) {
   return new URL(`../assets/images/${name}`, import.meta.url).href
+}
+
+export function getDataFromNow (timestamp: string) {
+  return dayjs(dayjs(timestamp)).fromNow()
 }

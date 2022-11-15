@@ -122,7 +122,7 @@ function RenderNews () {
   // 获取资讯数据
   const [news, setNews] = useState([])
   async function getNewsData () {
-    const { data } = await getNews()
+    const { data } = await getNews({ size: 3 })
     setNews(data)
   }
   useEffect(() => {
